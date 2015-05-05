@@ -27,6 +27,8 @@ public class Reservation implements Serializable {
     @ManyToOne
     private List<Seat> SeatList;
     private Customer customer;
+    @ManyToOne
+    private FlightInstance flightInstance;
 
     public Reservation() {
     }
