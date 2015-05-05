@@ -23,7 +23,7 @@ public class Seat implements Serializable {
     private String seatNumber;
     private Reservation reservation;
     private Customer customer;
-
+    
     public Seat() {
     }
 
