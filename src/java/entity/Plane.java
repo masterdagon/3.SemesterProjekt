@@ -10,13 +10,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
  * @author Dennnis
  */
 @Entity
-public class Flight implements Serializable {
+public class Plane implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,10 +25,10 @@ public class Flight implements Serializable {
     private String type;
     private String[] totalSeats;
 
-    public Flight() {
+    public Plane() {
     }
-
-    public Flight(String flightID, String type, String[] totalSeats) {
+    
+    public Plane(String flightID, String type, String[] totalSeats) {
         this.flightID = flightID;
         this.type = type;
         this.totalSeats = totalSeats;

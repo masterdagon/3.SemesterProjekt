@@ -20,39 +20,42 @@ public class Seat implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private String seatNumber;
+    private Reservation reservation;
+    private Customer customer;
 
-    public String getId() {
-        return id;
+    public Seat() {
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public Seat(String seatNumber, Reservation reservation, Customer customer) {
+        this.seatNumber = seatNumber;
+        this.reservation = reservation;
+        this.customer = customer;
+    }
+    
+    public String getSeatNumber() {
+        return seatNumber;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public void setSeatNumber(String seatNumber) {
+        this.seatNumber = seatNumber;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Seat)) {
-            return false;
-        }
-        Seat other = (Seat) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public Reservation getReservation() {
+        return reservation;
     }
 
-    @Override
-    public String toString() {
-        return "entity.Seat[ id=" + id + " ]";
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+    
     
 }

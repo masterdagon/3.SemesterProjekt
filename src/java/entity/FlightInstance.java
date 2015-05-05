@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -24,11 +25,13 @@ public class FlightInstance implements Serializable {
     private String flightID;
     private String airline;
     private Date date;
-    private Airport depature = null;
-    private Airport  destination = null;
+    @ManyToOne
+    private Airport arrival = null;
+    @ManyToOne
+    private Airport  depature = null;
     private int seats;
     private int available_seats;
-    private Flight plane = null;
+    private Plane plane = null;
     private String[] freeSeats;
     private boolean bookingCode;
 
@@ -45,6 +48,8 @@ public class FlightInstance implements Serializable {
         this.bookingCode = bookingCode;
     }
 
+    
+
     public Date getDate() {
         return date;
     }
@@ -53,11 +58,11 @@ public class FlightInstance implements Serializable {
         this.date = date;
     }
 
-    public Flight getPlane() {
+    public Plane getPlane() {
         return plane;
     }
 
-    public void setPlane(Flight plane) {
+    public void setPlane(Plane plane) {
         this.plane = plane;
     }
 
@@ -93,13 +98,14 @@ public class FlightInstance implements Serializable {
         this.depature = depature;
     }
 
-    public Airport getDestination() {
-        return destination;
+    public Airport getArrival() {
+        return arrival;
     }
 
-    public void setDestination(Airport destination) {
-        this.destination = destination;
+    public void setArrival(Airport arrival) {
+        this.arrival = arrival;
     }
+
 
     public int getSeats() {
         return seats;
