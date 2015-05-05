@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -27,6 +29,7 @@ public class FlightInstance implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String flightID;
     private String airline;
+    @Temporal(TemporalType.DATE)
     private Date date;
     @ManyToOne
     private Airport arrival = null;
