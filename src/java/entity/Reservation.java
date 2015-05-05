@@ -25,8 +25,7 @@ public class Reservation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    
-    
+  
     @OneToMany(mappedBy = "reservation")
     private List<Seat> SeatList;
     private Customer customer;

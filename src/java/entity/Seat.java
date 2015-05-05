@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -24,6 +25,7 @@ public class Seat implements Serializable {
     private String seatNumber;
     @ManyToOne
     private Reservation reservation;
+    @OneToOne
     private Customer customer;
     
     public Seat() {
