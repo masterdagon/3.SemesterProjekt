@@ -20,13 +20,40 @@ public class Airport implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private String code;
+    private String city;
+    private String country;
 
-    public String getId() {
-        return id;
+    public Airport() {
+    }
+        
+    public Airport(String code, String city, String country) {
+        this.code = code;
+        this.city = city;
+        this.country = country;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+    
+    public String getCity(){
+        return city;
+    }
+    
+    public void setCity(String city){
+        this.city = city;
+    }
+    
+    public String getCountry(){
+        return country;
+    }
+    
+    public void setCountry(String country){
+        this.country = country;
     }
 }
