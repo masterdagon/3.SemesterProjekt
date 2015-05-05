@@ -34,6 +34,7 @@ public class FlightInstance implements Serializable {
     private Airport  depature = null;
     private int seats;
     private int available_seats;
+    @ManyToOne
     private Plane plane = null;
     private String[] freeSeats;
     private boolean bookingCode;
