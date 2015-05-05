@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
@@ -25,17 +26,25 @@ public class Customer implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String fName,lName,street,country;
-   
-    @OneToMany
-    private List<CityInfo> cityList;  
+    private CityInfo cityInfo;
 
     public Customer() {
     }
 
-    public Customer(String fName, String lName) {
+    public Customer(String fName, String lName, String street, String country, CityInfo cityInfo) {
         this.fName = fName;
         this.lName = lName;
-        this.cityList = new ArrayList();
+        this.street = street;
+        this.country = country;
+        this.cityInfo = cityInfo;
+    }
+
+    public CityInfo getCityInfo() {
+        return cityInfo;
+    }
+
+    public void setCityInfo(CityInfo cityInfo) {
+        this.cityInfo = cityInfo;
     }
 
     public String getStreet() {
@@ -53,17 +62,7 @@ public class Customer implements Serializable {
     public void setCountry(String country) {
         this.country = country;
     }
-
-    public List<CityInfo> getCityList() {
-        return cityList;
-    }
-
-    public void setCityList(List<CityInfo> cityList) {
-        this.cityList = cityList;
-    }
     
-    
-
     public String getfName() {
         return fName;
     }
