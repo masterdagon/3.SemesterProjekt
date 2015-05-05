@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -21,6 +22,7 @@ public class Seat implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String seatNumber;
+    @ManyToOne
     private Reservation reservation;
     private Customer customer;
     
