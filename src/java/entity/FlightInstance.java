@@ -41,7 +41,6 @@ public class FlightInstance implements Serializable {
     private Plane plane = null;
     @ElementCollection()
     private List<String> freeSeats;
-    @ElementCollection()
     @OneToMany(mappedBy = "flightInstance")
     private List<Reservation> reservations;
     private boolean bookingCode;

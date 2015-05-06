@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,10 +26,10 @@ public class Airport implements Serializable {
     private String code;
     private String city;
     private String country;
-
+    @ElementCollection()
     @OneToMany(mappedBy = "arrival")
     private List<FlightInstance> ArrivalList;
-    
+    @ElementCollection()
     @OneToMany(mappedBy = "depature")
     private List<FlightInstance> DepartureList;
     
