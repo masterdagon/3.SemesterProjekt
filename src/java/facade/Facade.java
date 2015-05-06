@@ -42,6 +42,21 @@ public class Facade {
 //        }
 //    }
 
-
+//public Person createPerson(String fName, String lName, String email) {//finnish
+//        EntityManager em = null;
+//        try {
+//            em = getEntityManager();
+//            Person p = new Person(fName, lName);
+//            p.setEmail(email);
+//            em.getTransaction().begin();
+//            em.persist(p);
+//            em.getTransaction().commit();
+//            return p;
+//        } finally {
+//            if (em != null) {
+//                em.close();
+//            }
+//        }
+//    }
 
 }
