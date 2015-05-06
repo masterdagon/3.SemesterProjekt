@@ -6,12 +6,15 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 
 /**
@@ -26,11 +29,22 @@ public class Airport implements Serializable {
     private String code;
     private String city;
     private String country;
-    @ElementCollection()
     @OneToMany(mappedBy = "arrival")
+    @JoinTable
+    (
+      name="Arrival_LIST",
+      joinColumns={ @JoinColumn(name="AIRPORT", referencedColumnName="CODE") },
+      inverseJoinColumns={ @JoinColumn(name="FLIGHTINSTANCE", referencedColumnName="FLIGHTID",unique=true) }
+    )
     private List<FlightInstance> arrivalList;
-    @ElementCollection()
-    @OneToMany(mappedBy = "depature")
+    
+    @OneToMany(targetEntity=FlightInstance.class, mappedBy = "depature")
+    @JoinTable
+    (
+      name="Depature_LIST",
+      joinColumns={ @JoinColumn(name="AIRPORT", referencedColumnName="CODE") },
+      inverseJoinColumns={ @JoinColumn(name="FLIGHTINSTANCE", referencedColumnName="FLIGHTID",unique=true) }
+    )
     private List<FlightInstance> departureList;
     
     public Airport() {
@@ -40,6 +54,8 @@ public class Airport implements Serializable {
         this.code = code;
         this.city = city;
         this.country = country;
+        this.arrivalList = new ArrayList();
+        this.departureList = new ArrayList();
     }
     
     public void addFlightInstanceToArrivalList(FlightInstance flightinstance){

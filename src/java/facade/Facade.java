@@ -199,6 +199,8 @@ public class Facade {
             flightInstance = new FlightInstance(airline, date, price, a, d, plane);
             em.getTransaction().begin();
             em.persist(flightInstance);
+            em.persist(flightInstance.getArrival());
+            em.persist(flightInstance.getDepature());
             em.getTransaction().commit();
         } catch (Exception e) {
             System.out.println("Error in createFlightInstance:" + e);

@@ -32,9 +32,7 @@ public class FlightInstance implements Serializable {
     private String airline;
     @Temporal(TemporalType.DATE)
     private Date date;
-    @ManyToOne
     private Airport arrival = null;
-    @ManyToOne
     private Airport  depature = null;
     private double price;
     @ManyToOne
@@ -56,7 +54,9 @@ public class FlightInstance implements Serializable {
         this.reservations = new ArrayList();
         this.bookingCode = true;
         this.arrival = arrival;
+        this.arrival.addFlightInstanceToArrivalList(this);
         this.depature = departure;
+        this.depature.addFlightInstanceTodepartureList(this);
         this.plane = plane;
     }
     
