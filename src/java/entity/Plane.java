@@ -6,7 +6,9 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,21 +27,32 @@ public class Plane implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String flightID;
     private String type;
-    private String[] totalSeats;
+    private List<String> totalSeats;
     @OneToMany(mappedBy = "plane")
     private List<FlightInstance> flightInstance;
 
     public Plane() {
     }
 
-    public Plane(String flightID, String type, String[] totalSeats, List<FlightInstance> flightInstance) {
+    public Plane(String type, int totalSeats) {
         this.flightID = flightID;
         this.type = type;
-        this.totalSeats = totalSeats;
-        this.flightInstance = flightInstance;
+        this.totalSeats = new ArrayList();
+        for(int i = 0;i<totalSeats;i++){
+            String seat = String.valueOf(i);
+            this.totalSeats.add(seat);
+        }
+        
+        this.flightInstance = new ArrayList();
     }
 
+    public void addFlightInstance(FlightInstance flightInstance){
+        this.flightInstance.add(flightInstance);
+    }
     
+    public void removeFlightInstance(FlightInstance flightInstance){
+        this.flightInstance.remove(flightInstance);
+    }
     
     public String getFlightID() {
         return flightID;
@@ -57,13 +70,15 @@ public class Plane implements Serializable {
         this.type = type;
     }
 
-    public String[] getTotalSeats() {
+    public List<String> getTotalSeats() {
         return totalSeats;
     }
 
-    public void setTotalSeats(String[] totalSeats) {
+    public void setTotalSeats(List<String> totalSeats) {
         this.totalSeats = totalSeats;
     }
+
+  
 
     public List<FlightInstance> getFlightInstance() {
         return flightInstance;
