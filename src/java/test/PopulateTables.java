@@ -22,7 +22,6 @@ public class PopulateTables {
     static Facade f = new Facade();
     
     public static void main(String[] args) {
-        Persistence.generateSchema("3_SemesterProjektPU", null);
         f.createCityInfo("Kokkedal", 2980);
         f.createCityInfo("Hundested", 3390);
         f.createAirport("CPH", "Copenhagen","Denmark");
