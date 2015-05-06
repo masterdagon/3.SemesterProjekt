@@ -54,9 +54,7 @@ public class FlightInstance implements Serializable {
         this.reservations = new ArrayList();
         this.bookingCode = true;
         this.arrival = arrival;
-        this.arrival.addFlightInstanceToArrivalList(this);
         this.depature = departure;
-        this.depature.addFlightInstanceTodepartureList(this);
         this.plane = plane;
     }
     
