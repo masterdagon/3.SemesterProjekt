@@ -288,10 +288,10 @@ public class Facade {
             Airport fa = em.find(Airport.class, from);
             Airport ta = em.find(Airport.class, to);
             flightInstanceList = new ArrayList();
-            flightInstanceList = em.createQuery("select f from FlightInstance f where f.arrival=:arrival AND f.depature=:depature AND f.date=:date")
-                    .setParameter("arrival", fa)
-                    .setParameter("depature", ta)
-                    .setParameter("date", date)
+            flightInstanceList = em.createQuery("select f from FlightInstance f where f.arrival=:arrival AND f.depature=:depature")
+                    .setParameter("depature", fa)
+                    .setParameter("arrival", ta)
+//                    .setParameter("date", date)
                     .getResultList();
         } catch (Exception e) {
             System.out.println("Error in getFlightInstance:" + e);
