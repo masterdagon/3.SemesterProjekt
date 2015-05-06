@@ -118,7 +118,7 @@ public class Facade {
         return customer;
     }
 
-        public Plane getPlane(String type) {
+    public Plane getPlane(String type) {
         EntityManager em = null;
         Plane plane = null;
         try {
@@ -129,7 +129,7 @@ public class Facade {
         }
         return plane;
     }
-    
+
     public Plane createPlane(String type, int seats) {
         EntityManager em = null;
         Plane plane = null;
@@ -145,6 +145,18 @@ public class Facade {
         return plane;
     }
 
+    public Airport getAirport(String code) {
+        EntityManager em = null;
+        Airport airport = null;
+        try {
+            em = getEntityManager();
+            airport = em.find(Airport.class, code);
+        } catch (Exception e) {
+
+        }
+        return airport;
+    }
+
     public Airport createAirport(String code, String city, String country) {
         EntityManager em = null;
         Airport airport = null;
@@ -158,6 +170,18 @@ public class Facade {
 
         }
         return airport;
+    }
+
+    public FlightInstance getFlightInstance(int flightID) {
+        EntityManager em = null;
+        FlightInstance flightInstance = null;
+        try {
+            em = getEntityManager();
+            flightInstance = em.find(FlightInstance.class, flightID);
+        } catch (Exception e) {
+
+        }
+        return flightInstance;
     }
 
     public FlightInstance createFlightInstance(String airline, Date date, double price, Airport arrival, Airport departure, String planeType) {

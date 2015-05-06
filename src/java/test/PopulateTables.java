@@ -5,7 +5,7 @@
  */
 package test;
 
-import static entity.FlightInstance_.price;
+import entity.Airport;
 import facade.Facade;
 import java.util.Date;
 
@@ -24,7 +24,9 @@ public class PopulateTables {
         f.createPlane("Airbus A350", 253);
         f.createCustomer("Martin", "Rasmussen", "Egedalsvænge", "Denmark", 2980);
         Date date = new Date();
-        f.createFlightInstance("SAS", date, 800, true, null, null, null)
+        Airport departure = f.getAirport("CPH");
+        Airport arrival = f.getAirport("FBB");
+        f.createFlightInstance("SAS", date, 800, arrival, departure, "Airbus A350");
     }
     
 }
