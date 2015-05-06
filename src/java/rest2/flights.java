@@ -103,7 +103,7 @@ public class flights {
               jo.addProperty("street", seat.getCustomer().getStreet());
               ja.add(jo);
           }
-          json.addProperty("Passengers",gson.toJson(ja));
+          json.add("Passengers",ja);
         
           
         return gson.toJson(json);

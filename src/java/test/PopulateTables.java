@@ -47,7 +47,7 @@ public class PopulateTables {
         System.out.println(f.getFlightWithDates(date1, date2).size());
         System.out.println(f.getFlightWithDatesAndDepature(date1, date2,"FBB").size());
         System.out.println(f.getFlightOnDateFromDepature(date,"FBB").size());
-        System.out.println(f.deleteReservation(res.getId()).getFreeSeats().size());
+//        System.out.println(f.deleteReservation(res.getId()).getFreeSeats().size());
     }
     
 }
