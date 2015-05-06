@@ -24,7 +24,7 @@ public class PopulateTables {
         f.createPlane("Airbus A350", 253);
         f.createCustomer("Martin", "Rasmussen", "Egedalsvænge", "Denmark", 2980);
         Date date = new Date();
-        f.createFlightInstance("SAS", date, 800, true, null, null, null)
+        f.createFlightInstance("SAS", date, 800, true, null, null, null);
     }
     
 }
