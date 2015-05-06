@@ -35,38 +35,6 @@ public class Facade {
         return emf.createEntityManager();
     }
 
-//    public Person getPersonFromPhone(int phoneNumber) throws EntityNotFoundException {//Finnish
-//        EntityManager em = null;
-//        try {
-//            em = getEntityManager();
-//            Phone phone = em.find(Phone.class, phoneNumber);
-//            if (phone == null) {
-//                throw new EntityNotFoundException("The PhoneNumber: " + phoneNumber + " does not exist");
-//            }
-//            Person p = phone.getPerson();
-//            return p;
-//        } finally {
-//            if (em != null) {
-//                em.close();
-//            }
-//        }
-//    }
-//public Person createPerson(String fName, String lName, String email) {//finnish
-//        EntityManager em = null;
-//        try {
-//            em = getEntityManager();
-//            Person p = new Person(fName, lName);
-//            p.setEmail(email);
-//            em.getTransaction().begin();
-//            em.persist(p);
-//            em.getTransaction().commit();
-//            return p;
-//        } finally {
-//            if (em != null) {
-//                em.close();
-//            }
-//        }
-//    }
     public CityInfo getCityInfo(int zip) {
         EntityManager em = null;
         CityInfo cityinfo = null;
