@@ -63,6 +63,8 @@ public class FlightInstance implements Serializable {
         this.plane = plane;
     }
     
+    
+    
     public String removeFreeSeat(){
         String seat = freeSeats.get(0);
         freeSeats.remove(0);
@@ -153,7 +155,7 @@ public class FlightInstance implements Serializable {
         this.reservations = reservations;
     }
 
-    public boolean isBookingCode() {
+    public boolean getBookingCode() {
         return bookingCode;
     }
 
