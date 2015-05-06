@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,7 +39,9 @@ public class FlightInstance implements Serializable {
     private double price;
     @ManyToOne
     private Plane plane = null;
+    @ElementCollection()
     private List<String> freeSeats;
+    @ElementCollection()
     @OneToMany(mappedBy = "flightInstance")
     private List<Reservation> reservations;
     private boolean bookingCode;
