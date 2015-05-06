@@ -46,18 +46,26 @@ public class FlightInstance implements Serializable {
     public FlightInstance() {
     }
 
-    public FlightInstance(String airline, Date date, double price, List<Reservation> reservations, boolean bookingCode,Airport arrival,Airport depature,Plane plane) {
+    public FlightInstance(String airline, Date date, double price, boolean bookingCode,Airport arrival,Airport departure,Plane plane) {
         this.airline = airline;
         this.date = date;
         this.price = price;
         this.freeSeats = plane.getTotalSeats();
-        this.reservations = reservations;
+        this.reservations = new ArrayList();
         this.bookingCode = bookingCode;
         this.arrival = arrival;
-        this.depature = depature;
+        this.depature = departure;
         this.plane = plane;
     }
 
+    public void addReservation(Reservation reservation){
+        reservations.add(reservation);
+    }
+    
+    public void removeReservation(Reservation reservation){
+        reservations.remove(reservation);
+    }
+    
     public Integer getFlightID() {
         return flightID;
     }
