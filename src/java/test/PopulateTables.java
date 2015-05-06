@@ -8,6 +8,7 @@ package test;
 import entity.Airport;
 import entity.Customer;
 import entity.FlightInstance;
+import entity.Reservation;
 import facade.Facade;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,7 +36,7 @@ public class PopulateTables {
         customerList.add(c2);
         Date date = new Date();
         FlightInstance fi1 = f.createFlightInstance("SAS", date, 800, "CPH", "FBB", "Airbus A350");
-        f.createReservation(customerList,fi1.getFlightID());
+        Reservation res = f.createReservation(customerList,fi1.getFlightID());
         System.out.println(f.getFlightWithFromToDate("CPH","FBB",date).size());
         Calendar c = Calendar.getInstance(); 
         c.setTime(date); 
@@ -46,6 +47,7 @@ public class PopulateTables {
         System.out.println(f.getFlightWithDates(date1, date2).size());
         System.out.println(f.getFlightWithDatesAndDepature(date1, date2,"FBB").size());
         System.out.println(f.getFlightOnDateFromDepature(date,"FBB").size());
+        System.out.println(f.deleteReservation(res.getId()).getFreeSeats().size());
     }
     
 }
