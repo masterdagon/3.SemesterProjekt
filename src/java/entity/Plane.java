@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,6 +28,7 @@ public class Plane implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String flightID;
     private String type;
+    @ElementCollection()
     private List<String> totalSeats;
     @OneToMany(mappedBy = "plane")
     private List<FlightInstance> flightInstance;
