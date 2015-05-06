@@ -32,9 +32,10 @@ public class Seat implements Serializable {
     public Seat() {
     }
 
-    public Seat(String seatNumber, Customer customer) {
+    public Seat(String seatNumber, Customer customer ,Reservation reservation ) {
         this.seatNumber = seatNumber;
         this.customer = customer;
+        this.reservation = reservation;
     }
     
     public String getSeatNumber() {

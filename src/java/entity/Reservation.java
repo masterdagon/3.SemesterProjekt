@@ -41,9 +41,7 @@ public class Reservation implements Serializable {
     public Reservation( ArrayList<Customer> customerList, FlightInstance flightInstance) {
         this.seatList = new ArrayList();
         for (int i = 0; i < customerList.size(); i++) {
-            seatList.add(new Seat(flightInstance.getFreeSeats().get(0),customerList.get(i)));
-            flightInstance.removeFreeSeat();
-            
+            seatList.add(new Seat(flightInstance.getFreeSeats().get(0),customerList.get(i),this));
         }
         this.customer = customerList.get(0);
         this.flightInstance = flightInstance;
@@ -64,15 +62,7 @@ public class Reservation implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    
-    public List<Seat> getSeatList() {
-        return SeatList;
-    }
-
-    public void setSeatList(List<Seat> SeatList) {
-        this.SeatList = SeatList;
-    }
-
+   
     public Customer getCustomer() {
         return customer;
     }
