@@ -58,13 +58,38 @@ public class flights {
         return gson.toJson("{/'test/':/'test/'}");
     }
     
-     @GET
+    @GET
+    @Produces("application/json")
+    @Path("{date1}/{date2}")
+    public String getFlightsFromDates(@PathParam("date1") Date date1,@PathParam("date2") Date date2) {;
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        List<FlightInstance> fiList = f.getFlightWithDates(date1, date2);
+        JsonArray flightList = new JsonArray();
+        for (FlightInstance fl : fiList) {
+            JsonObject flight = new JsonObject();
+            flight.addProperty("airport", fl.getAirline());
+            flight.addProperty("price", fl.getPrice());
+            flight.addProperty("flightId", fl.getFlightID());
+            flight.addProperty("takeOffDate", df.format(fl.getDate()));
+            flight.addProperty("landingDate", df.format(fl.getDate()));
+            flight.addProperty("depature", fl.getDepature().getCode());
+            flight.addProperty("destination", fl.getArrival().getCode());
+            flight.addProperty("seats", fl.getPlane().getTotalSeats().size());
+            flight.addProperty("available seats", fl.getFreeSeats().size());
+            flight.addProperty("bookingCode", Boolean.FALSE);
+            flightList.add(flight);
+        }
+        return gson.toJson(flightList);
+
+    }
+    
+    @GET
     @Produces("application/json")
     @Path("{from}/{to}/{Date}")
-    public String getFlightsTOFromDate(@PathParam("from") String from, @PathParam("to") String to,@PathParam("date") String date) {
+    public String getFlightsTOFromDate(@PathParam("from") String from, @PathParam("to") String to,@PathParam("date") Date date) {
         System.out.println("from= " + from + " to= " + to + " date= ");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        List<FlightInstance> fiList = f.getFlightWithFromToDate(from, to, new Date());
+        List<FlightInstance> fiList = f.getFlightWithFromToDate(from, to, date);
         JsonArray flightList = new JsonArray();
         for (FlightInstance fl : fiList) {
             JsonObject flight = new JsonObject();
