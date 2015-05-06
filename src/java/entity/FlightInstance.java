@@ -57,6 +57,86 @@ public class FlightInstance implements Serializable {
         this.depature = depature;
         this.plane = plane;
     }
+
+    public Integer getFlightID() {
+        return flightID;
+    }
+
+    public void setFlightID(Integer flightID) {
+        this.flightID = flightID;
+    }
+
+    public String getAirline() {
+        return airline;
+    }
+
+    public void setAirline(String airline) {
+        this.airline = airline;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Airport getArrival() {
+        return arrival;
+    }
+
+    public void setArrival(Airport arrival) {
+        this.arrival = arrival;
+    }
+
+    public Airport getDepature() {
+        return depature;
+    }
+
+    public void setDepature(Airport depature) {
+        this.depature = depature;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Plane getPlane() {
+        return plane;
+    }
+
+    public void setPlane(Plane plane) {
+        this.plane = plane;
+    }
+
+    public List<String> getFreeSeats() {
+        return freeSeats;
+    }
+
+    public void setFreeSeats(List<String> freeSeats) {
+        this.freeSeats = freeSeats;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
+    public boolean isBookingCode() {
+        return bookingCode;
+    }
+
+    public void setBookingCode(boolean bookingCode) {
+        this.bookingCode = bookingCode;
+    }
     
     
 }
