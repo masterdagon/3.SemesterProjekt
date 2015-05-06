@@ -187,7 +187,6 @@ public class Facade {
     public FlightInstance createFlightInstance(String airline, Date date, double price, String arrival, String departure, String planeType) {
         EntityManager em = null;
         FlightInstance flightInstance = null;
-        System.out.println("test");
         try {
             em = getEntityManager();
             Plane plane = em.find(Plane.class, planeType);
@@ -195,7 +194,6 @@ public class Facade {
             Airport d = em.find(Airport.class, departure);
             flightInstance = new FlightInstance(airline, date, price, a, d, plane);
             em.getTransaction().begin();
-            System.out.println(flightInstance);
             em.persist(flightInstance);
             em.getTransaction().commit();
         } catch (Exception e) {
