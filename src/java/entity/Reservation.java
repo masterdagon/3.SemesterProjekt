@@ -43,6 +43,14 @@ public class Reservation implements Serializable {
         this.customer = customer;
         this.flightInstance = flightInstance;
     }
+
+    public FlightInstance getFlightInstance() {
+        return flightInstance;
+    }
+
+    public void setFlightInstance(FlightInstance flightInstance) {
+        this.flightInstance = flightInstance;
+    }
     
     public Integer getId() {
         return id;
