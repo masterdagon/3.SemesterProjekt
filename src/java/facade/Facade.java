@@ -197,8 +197,15 @@ public class Facade {
             Airport a = em.find(Airport.class, arrival);
             Airport d = em.find(Airport.class, departure);
             flightInstance = new FlightInstance(airline, date, price, a, d, plane);
+            flightInstance.setArrival(a);
+            flightInstance.setDepature(d);
+          
             em.getTransaction().begin();
             em.persist(flightInstance);
+            a.addFlightInstanceToArrivalList(flightInstance);
+            d.addFlightInstanceTodepartureList(flightInstance);
+            em.merge(a);
+            em.merge(d);
             em.getTransaction().commit();
         } catch (Exception e) {
             System.out.println("Error in createFlightInstance:" + e);
