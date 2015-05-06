@@ -23,6 +23,7 @@ public class Seat implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String seatNumber;
+ 
     @ManyToOne
     private Reservation reservation;
     @OneToOne
