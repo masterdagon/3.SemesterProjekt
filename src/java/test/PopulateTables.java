@@ -24,8 +24,8 @@ public class PopulateTables {
         f.createPlane("Airbus A350", 253);
         f.createCustomer("Martin", "Rasmussen", "Egedalsvænge", "Denmark", 2980);
         Date date = new Date();
-        Airport departure = f.getAirport("CPH");
-        Airport arrival = f.getAirport("FBB");
+//        Airport departure = f.getAirport("CPH");
+//        Airport arrival = f.getAirport("FBB");
         f.createFlightInstance("SAS", date, 800, "CPH", "FBB", "Airbus A350");
     }
     

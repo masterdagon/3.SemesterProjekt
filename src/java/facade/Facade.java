@@ -70,7 +70,7 @@ public class Facade {
             em = getEntityManager();
             cityinfo = em.find(CityInfo.class, zip);
         } catch (Exception e) {
-
+            System.out.println("Error in create getCityInfo:" + e);
         }
         return cityinfo;
     }
@@ -85,7 +85,7 @@ public class Facade {
             em.persist(cityinfo);
             em.getTransaction().commit();
         } catch (Exception e) {
-
+            System.out.println("Error in create createCityInfo:" + e);
         }
         return cityinfo;
     }
@@ -97,7 +97,7 @@ public class Facade {
             em = getEntityManager();
             customer = em.find(Customer.class, id);
         } catch (Exception e) {
-
+            System.out.println("Error in create getCustomer:" + e);
         }
         return customer;
     }
@@ -113,7 +113,7 @@ public class Facade {
             em.persist(customer);
             em.getTransaction().commit();
         } catch (Exception e) {
-
+            System.out.println("Error in create createCustomer:" + e);
         }
         return customer;
     }
@@ -125,7 +125,7 @@ public class Facade {
             em = getEntityManager();
             plane = em.find(Plane.class, type);
         } catch (Exception e) {
-
+            System.out.println("Error in create getPlane:" + e);
         }
         return plane;
     }
@@ -140,7 +140,7 @@ public class Facade {
             em.persist(plane);
             em.getTransaction().commit();
         } catch (Exception e) {
-
+            System.out.println("Error in create createPlane:" + e);
         }
         return plane;
     }
@@ -152,7 +152,7 @@ public class Facade {
             em = getEntityManager();
             airport = em.find(Airport.class, code);
         } catch (Exception e) {
-
+            System.out.println("Error in create getAirport:" + e);
         }
         return airport;
     }
@@ -167,7 +167,7 @@ public class Facade {
             em.persist(airport);
             em.getTransaction().commit();
         } catch (Exception e) {
-
+            System.out.println("Error in create createAirport:" + e);
         }
         return airport;
     }
@@ -179,7 +179,7 @@ public class Facade {
             em = getEntityManager();
             flightInstance = em.find(FlightInstance.class, flightID);
         } catch (Exception e) {
-
+            System.out.println("Error in create getFlightInstance:" + e);
         }
         return flightInstance;
     }
@@ -190,25 +190,16 @@ public class Facade {
         System.out.println("test");
         try {
             em = getEntityManager();
-            System.out.println("test1");
             Plane plane = em.find(Plane.class, planeType);
-            System.out.println("test2");
-            Airport dep = em.find(Airport.class, departure);
-            System.out.println("test3");
-            Airport arr = em.find(Airport.class, arrival);
-            System.out.println(plane);
-            System.out.println(dep.getCode());
-            System.out.println(arr.getCode());
-            flightInstance = new FlightInstance(airline, date, price, arr, dep, plane);
-            System.out.println("test5");
+            Airport a = em.find(Airport.class, arrival);
+            Airport d = em.find(Airport.class, departure);
+            flightInstance = new FlightInstance(airline, date, price, a, d, plane);
             em.getTransaction().begin();
             System.out.println(flightInstance);
             em.persist(flightInstance);
             em.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e);
-                    
-
+            System.out.println("Error in create createFlightInstance:" + e);
         }
         return flightInstance;
     }
