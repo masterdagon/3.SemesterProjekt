@@ -10,6 +10,7 @@ import entity.Customer;
 import entity.FlightInstance;
 import facade.Facade;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Persistence;
 
@@ -35,8 +36,16 @@ public class PopulateTables {
         Date date = new Date();
         FlightInstance fi1 = f.createFlightInstance("SAS", date, 800, "CPH", "FBB", "Airbus A350");
         f.createReservation(customerList,fi1.getFlightID());
-        
-        System.out.println(f.getFlightWithFromToDate("CPH", "FBB", date).size());
+        System.out.println(f.getFlightWithFromToDate("CPH","FBB",date).size());
+        Calendar c = Calendar.getInstance(); 
+        c.setTime(date); 
+        c.add(Calendar.DATE, -1);
+        Date date1 =c.getTime();
+        c.add(Calendar.DATE, 2);
+        Date date2 = c.getTime();
+        System.out.println(f.getFlightWithDates(date1, date2).size());
+        System.out.println(f.getFlightWithDatesAndDepature(date1, date2,"FBB").size());
+        System.out.println(f.getFlightOnDateFromDepature(date,"FBB").size());
     }
     
 }

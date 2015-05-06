@@ -210,4 +210,143 @@ public class Facade {
         }
         return reservation;
     }
+//    public void deletePerson(int personId) throws EntityNotFoundException {//finnish
+//        EntityManager em = null;
+//        try {
+//            em = getEntityManager();
+//            Person p = em.find(Person.class, personId);
+//            if (p == null) {
+//                throw new EntityNotFoundException("The person does not exist in database");
+//            }
+//            int aId = 0;
+//            if (p.getAddress() != null) {
+//                aId = p.getAddress().getId();
+//            }
+//            List<Phone> phones = p.getPhones();
+//            List<Hobby> hobbies = p.getHobbies();
+//            if (p.getAddress() != null) {
+//                if (!p.getAddress().getPersons().isEmpty()) {
+//                    if (p.getAddress().getPersons().contains(p)) {
+//                        p.getAddress().removePerson(p);
+//                    }
+//                } else {
+//                }
+//            }
+//
+//            em.getTransaction().begin();
+//            for (Hobby hb : hobbies) {
+//
+//                hb.removePerson(p);
+//
+//                em.merge(hb);
+//            }
+//            for (Phone ph : phones) {
+//                em.remove(ph);
+//            }
+//            p.getPhones().clear();
+//            p.getHobbies().clear();
+//            em.merge(p);
+//            em.remove(p);
+//            em.getTransaction().commit();
+//            if (p.getAddress() != null) {
+//                deleteAddress(aId);
+//            }
+//        } finally {
+//            if (em != null) {
+//                em.close();
+//            }
+//        }
+//    }
+    public FlightInstance deleteReservation(int reservationID) {//finnish
+        EntityManager em = null;
+        Reservation reservation = null;
+        FlightInstance flightInstance = null;
+        try {
+            em = getEntityManager();
+            reservation = em.find(Reservation.class, reservationID);
+            flightInstance = reservation.getFlightInstance();
+           
+            em.getTransaction().begin();
+            for (Seat seat : reservation.getSeatList()) {
+                flightInstance.addFreeSeat(seat.getSeatNumber());
+                em.remove(seat.getCustomer());
+                em.remove(seat);
+            }
+            em.remove(reservation);
+            em.getTransaction().commit();
+         } catch (Exception e) {
+            System.out.println("Error in  createReservation:" + e);
+        }
+        return flightInstance;
+    }
+    
+    public List<FlightInstance> getFlightWithFromToDate(String from,String to,Date date){             
+        EntityManager em = null;
+        List<FlightInstance> flightInstanceList = null;
+        try {
+            em = getEntityManager();
+            Airport fa = em.find(Airport.class, from);
+            Airport ta = em.find(Airport.class, to);
+            flightInstanceList = new ArrayList();
+            flightInstanceList = em.createQuery("select f from FlightInstance f where f.arrival=:arrival AND f.depature=:depature AND f.date=:date")
+                    .setParameter("arrival", fa)
+                    .setParameter("depature", ta)
+                    .setParameter("date", date)
+                    .getResultList();
+        } catch (Exception e) {
+            System.out.println("Error in getFlightInstance:" + e);
+        }
+        return flightInstanceList;
+    }
+    
+    public List<FlightInstance> getFlightWithDates(Date date1,Date date2){             
+        EntityManager em = null;
+        List<FlightInstance> flightInstanceList = null;
+        try {
+            em = getEntityManager();
+            flightInstanceList = new ArrayList();
+            flightInstanceList = em.createQuery("select f from FlightInstance f where f.date BETWEEN :date1 AND :date2")
+                    .setParameter("date1", date1)
+                    .setParameter("date2", date2)
+                    .getResultList();
+        } catch (Exception e) {
+            System.out.println("Error in getFlightInstance:" + e);
+        }
+        return flightInstanceList;
+    }
+    
+    public List<FlightInstance> getFlightWithDatesAndDepature(Date date1,Date date2,String from){             
+        EntityManager em = null;
+        List<FlightInstance> flightInstanceList = null;
+        try {
+            em = getEntityManager();
+            Airport fa = em.find(Airport.class, from);
+            flightInstanceList = new ArrayList();
+            flightInstanceList = em.createQuery("select f from FlightInstance f where f.depature=:depature AND f.date BETWEEN :date1 AND :date2")
+                    .setParameter("depature", fa)
+                    .setParameter("date1", date1)
+                    .setParameter("date2", date2)
+                    .getResultList();
+        } catch (Exception e) {
+            System.out.println("Error in getFlightInstance:" + e);
+        }
+        return flightInstanceList;
+    }
+    
+    public List<FlightInstance> getFlightOnDateFromDepature(Date date,String from){             
+        EntityManager em = null;
+        List<FlightInstance> flightInstanceList = null;
+        try {
+            em = getEntityManager();
+            Airport fa = em.find(Airport.class, from);
+            flightInstanceList = new ArrayList();
+            flightInstanceList = em.createQuery("select f from FlightInstance f where f.depature=:depature AND f.date = :date")
+                    .setParameter("depature", fa)
+                    .setParameter("date", date)
+                    .getResultList();
+        } catch (Exception e) {
+            System.out.println("Error in getFlightInstance:" + e);
+        }
+        return flightInstanceList;
+    }
 }
