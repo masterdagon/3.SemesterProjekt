@@ -74,7 +74,7 @@ public class flights {
             flight.addProperty("takeOffDate", df.format(fl.getDate()));
             flight.addProperty("landingDate", df.format(fl.getDate()));
             flight.addProperty("depature", fl.getDepature().getCode());
-            flight.addProperty("desttination", fl.getArrival().getCode());
+            flight.addProperty("destination", fl.getArrival().getCode());
             flight.addProperty("seats", fl.getPlane().getTotalSeats().size());
             flight.addProperty("available seats", fl.getFreeSeats().size());
             flight.addProperty("bookingCode", Boolean.FALSE);
@@ -83,33 +83,6 @@ public class flights {
         return gson.toJson(flightList);
 
     }
-
-//    @GET
-//    @Produces("application/json")
-//    @Path("/{startAirport}/{:endAirport}/{date}")
-//    public String getAvailibleFlights_Start_End_Date(@PathParam("startAirport") String startAirport,@PathParam("endAirport") String endAirport,@PathParam("date") String date) throws ParseException{
-//        DateFormat df = DateFormat.getInstance();
-//        Date d = df.parse(date);
-//        List<FlightInstance> list = f.getFlightWithFromToDate(startAirport, endAirport, d);
-//        JsonArray ja = new JsonArray();
-//        for(FlightInstance flight:list){
-//          JsonObject json = new JsonObject();
-//          json.addProperty("airline", flight.getAirline());
-//          json.addProperty("price", flight.getPrice());
-//          json.addProperty("flightId",flight.getFlightID());
-//          json.addProperty("takeOffDate",df.format(flight.getDate()));
-//          json.addProperty("landingDate",df.format(flight.getDate()));
-//          json.addProperty("depature",flight.getDepature().getCode());
-//          json.addProperty("destination",flight.getArrival().getCode());
-//          json.addProperty("seats",String.valueOf(flight.getPlane().getTotalSeats()));
-//          json.addProperty("available seats",String.valueOf(flight.getFreeSeats()));
-//          json.addProperty("bookingCode",flight.getBookingCode());
-//          ja.add(json);
-//          
-//        }
-//        
-//        return gson.toJson(ja);
-//    }
     
     @GET
     @Produces("application/json")
@@ -148,3 +121,30 @@ public class flights {
     
     
 }
+
+//@GET
+//    @Produces("application/json")
+//    @Path("/{startAirport}/{:endAirport}/{date}")
+//    public String getAvailibleFlights_Start_End_Date(@PathParam("startAirport") String startAirport,@PathParam("endAirport") String endAirport,@PathParam("date") String date) throws ParseException{
+//        DateFormat df = DateFormat.getInstance();
+//        Date d = df.parse(date);
+//        List<FlightInstance> list = f.getFlightWithFromToDate(startAirport, endAirport, d);
+//        JsonArray ja = new JsonArray();
+//        for(FlightInstance flight:list){
+//          JsonObject json = new JsonObject();
+//          json.addProperty("airline", flight.getAirline());
+//          json.addProperty("price", flight.getPrice());
+//          json.addProperty("flightId",flight.getFlightID());
+//          json.addProperty("takeOffDate",df.format(flight.getDate()));
+//          json.addProperty("landingDate",df.format(flight.getDate()));
+//          json.addProperty("depature",flight.getDepature().getCode());
+//          json.addProperty("destination",flight.getArrival().getCode());
+//          json.addProperty("seats",String.valueOf(flight.getPlane().getTotalSeats()));
+//          json.addProperty("available seats",String.valueOf(flight.getFreeSeats()));
+//          json.addProperty("bookingCode",flight.getBookingCode());
+//          ja.add(json);
+//          
+//        }
+//        
+//        return gson.toJson(ja);
+//    }
