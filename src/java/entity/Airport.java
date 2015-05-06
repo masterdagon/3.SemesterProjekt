@@ -40,14 +40,14 @@ public class Airport implements Serializable {
 //      inverseJoinColumns={ @JoinColumn(name="FLIGHTINSTANCE", referencedColumnName="FLIGHTID",unique=true) }
 //    )
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "ArivalList",
+    @JoinTable(name = "ArrivalList",
                joinColumns = @JoinColumn(name = "CODE"),
                inverseJoinColumns = @JoinColumn(name = "FLIGHTID") 
               )
     private List<FlightInstance> arrivalList;
     
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "DepatureList",
+    @JoinTable(name = "DepartureList",
                joinColumns = @JoinColumn(name = "CODE"),
                inverseJoinColumns = @JoinColumn(name = "FLIGHTID") 
               )
