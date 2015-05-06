@@ -5,8 +5,15 @@
  */
 package Rest;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import entity.FlightInstance;
+import facade.Facade;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ws.rs.core.Context;
@@ -28,11 +35,15 @@ public class flights {
 
     @Context
     private UriInfo context;
+    private Facade f;
+    private Gson gson;
 
     /**
      * Creates a new instance of flights
      */
     public flights() {
+        this.f = new Facade();
+        gson = new Gson();
     }
 
     /**
@@ -41,31 +52,27 @@ public class flights {
      */
     @GET
     @Produces("application/json")
-    @Path("/{from}/{to}/{date}")
-    public String getFlightsTOFromDate(@PathParam("from")String from,@PathParam("to")String to,@PathParam("date")Date date) {
-//        JsonObject flight = new JsonObject();
-//            flight.addProperty("airLine", c.getId());
-//            company.addProperty("name", c.getName());
-//            company.addProperty("description", c.getDescription());
-//            company.addProperty("cvr", c.getCvr());
-//            company.addProperty("email", c.getEmail());
-//            company.addProperty("street", c.getAddress().getStreet());
-//            company.addProperty("additionalinfo", c.getAddress().getAdditionalinfo());
-//            company.addProperty("zipcode", c.getAddress().getCityInfo().getZipCode());
-//            company.addProperty("city", c.getAddress().getCityInfo().getCity());
-//            
-//            JsonArray phones = new JsonArray();
-//            List<Phone> phs = c.getPhones();
-//            for (Phone ph : phs) {
-//                JsonObject phone = new JsonObject();
-//                phone.addProperty("number", ph.getNumber());
-//                phone.addProperty("description", ph.getDescription());
-//                phones.add(phone); 
-//            }
-//            company.add("phones", phones);
-//            company.addProperty("numemployees", c.getNumEmployees());
-//            company.addProperty("marketvalue", c.getMarketValue());
-        throw new UnsupportedOperationException();
+    @Path("{from}/{to}")
+    public String getFlightsTOFromDate(@PathParam("from")String from,@PathParam("to")String to) {
+        System.out.println("from= "+from+" to= "+to+" date= ");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        List<FlightInstance> fiList = f.getFlightWithFromToDate(from, to, new Date());
+            JsonArray flightList = new JsonArray();
+                for (FlightInstance fl : fiList) {
+                    JsonObject flight = new JsonObject();
+                    flight.addProperty("airport", fl.getAirline());
+                    flight.addProperty("price", fl.getPrice());
+                    flight.addProperty("flightId", fl.getFlightID());
+                    flight.addProperty("takeOffDate", df.format(fl.getDate()));
+                    flight.addProperty("landingDate", df.format(fl.getDate()));
+                    flight.addProperty("depature", fl.getDepature().getCode());
+                    flight.addProperty("desttination", fl.getArrival().getCode());
+                    flight.addProperty("seats", fl.getPlane().getTotalSeats().size());
+                    flight.addProperty("available seats", fl.getFreeSeats().size());
+                    flight.addProperty("bookingCode", Boolean.FALSE);
+                    flightList.add(flight);
+                }
+              return gson.toJson(flightList);
     }
 
     /**

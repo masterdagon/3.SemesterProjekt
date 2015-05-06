@@ -37,7 +37,7 @@ public class PopulateTables {
         Date date = new Date();
         FlightInstance fi1 = f.createFlightInstance("SAS", date, 800, "CPH", "FBB", "Airbus A350");
         Reservation res = f.createReservation(customerList,fi1.getFlightID());
-        System.out.println(f.getFlightWithFromToDate("CPH","FBB",date).size());
+        System.out.println(f.getFlightWithFromToDate("FBB","CPH",date).size());
         Calendar c = Calendar.getInstance(); 
         c.setTime(date); 
         c.add(Calendar.DATE, -1);
