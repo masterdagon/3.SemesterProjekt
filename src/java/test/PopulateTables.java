@@ -26,7 +26,7 @@ public class PopulateTables {
         Date date = new Date();
         Airport departure = f.getAirport("CPH");
         Airport arrival = f.getAirport("FBB");
-        f.createFlightInstance("SAS", date, 800, arrival, departure, "Airbus A350");
+        f.createFlightInstance("SAS", date, 800, "CPH", "FBB", "Airbus A350");
     }
     
 }

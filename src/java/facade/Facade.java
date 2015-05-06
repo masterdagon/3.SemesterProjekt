@@ -184,17 +184,30 @@ public class Facade {
         return flightInstance;
     }
 
-    public FlightInstance createFlightInstance(String airline, Date date, double price, Airport arrival, Airport departure, String planeType) {
+    public FlightInstance createFlightInstance(String airline, Date date, double price, String arrival, String departure, String planeType) {
         EntityManager em = null;
         FlightInstance flightInstance = null;
+        System.out.println("test");
         try {
             em = getEntityManager();
-            Plane plane = em.find(Plane.class, "planeType");
-            flightInstance = new FlightInstance(airline, date, price, arrival, departure, plane);
+            System.out.println("test1");
+            Plane plane = em.find(Plane.class, planeType);
+            System.out.println("test2");
+            Airport dep = em.find(Airport.class, departure);
+            System.out.println("test3");
+            Airport arr = em.find(Airport.class, arrival);
+            System.out.println(plane);
+            System.out.println(dep.getCode());
+            System.out.println(arr.getCode());
+            flightInstance = new FlightInstance(airline, date, price, arr, dep, plane);
+            System.out.println("test5");
             em.getTransaction().begin();
+            System.out.println(flightInstance);
             em.persist(flightInstance);
             em.getTransaction().commit();
         } catch (Exception e) {
+            System.out.println(e);
+                    
 
         }
         return flightInstance;
