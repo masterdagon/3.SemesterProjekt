@@ -199,9 +199,4 @@ public class Facade {
         }
         return flightInstance;
     }
-
-    public void createFlightInstance(String sas, Date date, int i, boolean b, Object object, Object object0, Object object1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }
