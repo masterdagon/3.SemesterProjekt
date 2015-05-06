@@ -35,6 +35,8 @@ public class PopulateTables {
         Date date = new Date();
         FlightInstance fi1 = f.createFlightInstance("SAS", date, 800, "CPH", "FBB", "Airbus A350");
         f.createReservation(customerList,fi1.getFlightID());
+        
+        System.out.println(f.getFlightWithFromToDate("CPH", "FBB", date).size());
     }
     
 }
