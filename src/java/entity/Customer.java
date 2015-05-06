@@ -42,6 +42,16 @@ public class Customer implements Serializable {
         this.cityInfo = cityInfo;
     }
 
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
+    }
+
+    
+    
     public CityInfo getCityInfo() {
         return cityInfo;
     }

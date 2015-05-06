@@ -37,6 +37,16 @@ public class Seat implements Serializable {
         this.customer = customer;
         this.reservation = reservation;
     }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
+    }
+
+    
     
     public String getSeatNumber() {
         return seatNumber;
