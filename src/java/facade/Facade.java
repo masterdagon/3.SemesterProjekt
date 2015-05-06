@@ -8,7 +8,9 @@ package facade;
 import entity.Airport;
 import entity.CityInfo;
 import entity.Customer;
+import entity.FlightInstance;
 import entity.Plane;
+import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -61,6 +63,18 @@ public class Facade {
 //            }
 //        }
 //    }
+    public CityInfo getCityInfo(int zip) {
+        EntityManager em = null;
+        CityInfo cityinfo = null;
+        try {
+            em = getEntityManager();
+            cityinfo = em.find(CityInfo.class, zip);
+        } catch (Exception e) {
+
+        }
+        return cityinfo;
+    }
+
     public CityInfo createCityInfo(String city, int zip) {
         EntityManager em = null;
         CityInfo cityinfo = null;
@@ -74,6 +88,18 @@ public class Facade {
 
         }
         return cityinfo;
+    }
+
+    public Customer getCustomer(int id) {
+        EntityManager em = null;
+        Customer customer = null;
+        try {
+            em = getEntityManager();
+            customer = em.find(Customer.class, id);
+        } catch (Exception e) {
+
+        }
+        return customer;
     }
 
     public Customer createCustomer(String fname, String lname, String street, String country, int zip) {
@@ -92,6 +118,18 @@ public class Facade {
         return customer;
     }
 
+        public Plane getPlane(String type) {
+        EntityManager em = null;
+        Plane plane = null;
+        try {
+            em = getEntityManager();
+            plane = em.find(Plane.class, type);
+        } catch (Exception e) {
+
+        }
+        return plane;
+    }
+    
     public Plane createPlane(String type, int seats) {
         EntityManager em = null;
         Plane plane = null;
@@ -106,9 +144,9 @@ public class Facade {
         }
         return plane;
     }
-    
-    public Airport createAirport(String code,String city, String country){
-                EntityManager em = null;
+
+    public Airport createAirport(String code, String city, String country) {
+        EntityManager em = null;
         Airport airport = null;
         try {
             em = getEntityManager();
@@ -121,5 +159,21 @@ public class Facade {
         }
         return airport;
     }
-    
+
+    public FlightInstance createFlightInstance(String airline, Date date, double price, Airport arrival, Airport departure, String planeType) {
+        EntityManager em = null;
+        FlightInstance flightInstance = null;
+        try {
+            em = getEntityManager();
+            Plane plane = em.find(Plane.class, "planeType");
+            flightInstance = new FlightInstance(airline, date, price, arrival, departure, plane);
+            em.getTransaction().begin();
+            em.persist(flightInstance);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+
+        }
+        return flightInstance;
+    }
+
 }
