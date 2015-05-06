@@ -26,9 +26,7 @@ public class Plane implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-     private String type;
-//    private String flightID;
-   
+    private String type;
     @ElementCollection()
     private List<String> totalSeats;
     @OneToMany(mappedBy = "plane")
@@ -38,7 +36,6 @@ public class Plane implements Serializable {
     }
 
     public Plane(String type, int totalSeats) {
-//        this.flightID = flightID;
         this.type = type;
         this.totalSeats = new ArrayList();
         for(int i = 0;i<totalSeats;i++){
@@ -56,14 +53,6 @@ public class Plane implements Serializable {
     public void removeFlightInstance(FlightInstance flightInstance){
         this.flightInstance.remove(flightInstance);
     }
-    
-//    public String getFlightID() {
-//        return flightID;
-//    }
-//
-//    public void setFlightID(String flightID) {
-//        this.flightID = flightID;
-//    }
 
     public String getType() {
         return type;
