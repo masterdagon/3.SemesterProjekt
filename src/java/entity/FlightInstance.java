@@ -27,7 +27,7 @@ public class FlightInstance implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String flightID;
+    private Integer flightID;
     private String airline;
     @Temporal(TemporalType.DATE)
     private Date date;
@@ -35,66 +35,34 @@ public class FlightInstance implements Serializable {
     private Airport arrival = null;
     @ManyToOne
     private Airport  depature = null;
-    private int seats;
-    private int available_seats;
+    private double price;
     @ManyToOne
     private Plane plane = null;
-    private String[] freeSeats;
-    private boolean bookingCode;
+    private List<String> freeSeats;
     @OneToMany(mappedBy = "flightInstance")
     private List<Reservation> reservations;
-
+    private boolean bookingCode;
+    
     public FlightInstance() {
     }
 
-    public FlightInstance(String flightID, String airline, Date date, int seats, int available_seats, String[] freeSeats, boolean bookingCode) {
-        this.flightID = flightID;
+    public FlightInstance(String airline, Date date, double price, List<Reservation> reservations, boolean bookingCode,Airport arrival,Airport depature,Plane plane) {
         this.airline = airline;
         this.date = date;
-        this.seats = seats;
-        this.available_seats = available_seats;
-        this.freeSeats = freeSeats;
-        this.bookingCode = bookingCode;
-        this.reservations = new ArrayList();
-    }
-
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(List<Reservation> reservations) {
+        this.price = price;
+        this.freeSeats = plane.getTotalSeats();
         this.reservations = reservations;
-    }
-    
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Plane getPlane() {
-        return plane;
-    }
-
-    public void setPlane(Plane plane) {
+        this.bookingCode = bookingCode;
+        this.arrival = arrival;
+        this.depature = depature;
         this.plane = plane;
     }
 
-    public String[] getFreeSeats() {
-        return freeSeats;
-    }
-
-    public void setFreeSeats(String[] freeSeats) {
-        this.freeSeats = freeSeats;
-    }
-    
-    public String getFlightID() {
+    public Integer getFlightID() {
         return flightID;
     }
 
-    public void setFlightID(String flightID) {
+    public void setFlightID(Integer flightID) {
         this.flightID = flightID;
     }
 
@@ -106,12 +74,12 @@ public class FlightInstance implements Serializable {
         this.airline = airline;
     }
 
-    public Airport getDepature() {
-        return depature;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDepature(Airport depature) {
-        this.depature = depature;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Airport getArrival() {
@@ -122,21 +90,44 @@ public class FlightInstance implements Serializable {
         this.arrival = arrival;
     }
 
-
-    public int getSeats() {
-        return seats;
+    public Airport getDepature() {
+        return depature;
     }
 
-    public void setSeats(int seats) {
-        this.seats = seats;
+    public void setDepature(Airport depature) {
+        this.depature = depature;
     }
 
-    public int getAvailable_seats() {
-        return available_seats;
+    public double getPrice() {
+        return price;
     }
 
-    public void setAvailable_seats(int available_seats) {
-        this.available_seats = available_seats;
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Plane getPlane() {
+        return plane;
+    }
+
+    public void setPlane(Plane plane) {
+        this.plane = plane;
+    }
+
+    public List<String> getFreeSeats() {
+        return freeSeats;
+    }
+
+    public void setFreeSeats(List<String> freeSeats) {
+        this.freeSeats = freeSeats;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 
     public boolean isBookingCode() {
