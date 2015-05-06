@@ -7,7 +7,9 @@ package test;
 
 import entity.Airport;
 import entity.Customer;
+import entity.FlightInstance;
 import facade.Facade;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -24,13 +26,16 @@ public class PopulateTables {
         f.createAirport("CPH", "Copenhagen","Denmark");
         f.createAirport("FBB", "Berlin", "Germany");
         f.createPlane("Airbus A350", 253);
-        f.createCustomer("Martin", "Rasmussen", "Egedalsvænge", "Denmark", 2980);
-        f.createCustomer("Dennis", "Jensen", "Jernbanegade", "Denmark", 3390);
-//        Arraylist<Customer> custumerList
+        Customer c1 = f.createCustomer("Martin", "Rasmussen", "Egedalsvænge", "Denmark", 2980);
+        Customer c2 = f.createCustomer("Dennis", "Jensen", "Jernbanegade", "Denmark", 3390);
+        ArrayList<Customer> customerList = new ArrayList();
+        customerList.add(c1);
+        customerList.add(c2);
         Date date = new Date();
 //        Airport departure = f.getAirport("CPH");
 //        Airport arrival = f.getAirport("FBB");
-        f.createFlightInstance("SAS", date, 800, "CPH", "FBB", "Airbus A350");
+        FlightInstance fi1 = f.createFlightInstance("SAS", date, 800, "CPH", "FBB", "Airbus A350");
+        f.createReservation(customerList,fi1.getFlightID());
     }
     
 }
