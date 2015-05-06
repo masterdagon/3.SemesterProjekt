@@ -8,6 +8,8 @@ package entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,25 +28,29 @@ public class Airport implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "CODE")
     private String code;
     private String city;
     private String country;
-    @OneToMany(mappedBy = "arrival")
-    @JoinTable
-    (
-      name="Arrival_LIST",
-      joinColumns={ @JoinColumn(name="AIRPORT", referencedColumnName="CODE") },
-      inverseJoinColumns={ @JoinColumn(name="FLIGHTINSTANCE", referencedColumnName="FLIGHTID",unique=true) }
-    )
+    
+//    @JoinTable
+//    (
+//      name="Arrival_LIST",
+//      joinColumns={ @JoinColumn(name="AIRPORT", referencedColumnName="CODE") },
+//      inverseJoinColumns={ @JoinColumn(name="FLIGHTINSTANCE", referencedColumnName="FLIGHTID",unique=true) }
+//    )
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "ArivalList",
+               joinColumns = @JoinColumn(name = "CODE"),
+               inverseJoinColumns = @JoinColumn(name = "FLIGHTID") 
+              )
     private List<FlightInstance> arrivalList;
     
-    @OneToMany(targetEntity=FlightInstance.class, mappedBy = "depature")
-    @JoinTable
-    (
-      name="Depature_LIST",
-      joinColumns={ @JoinColumn(name="AIRPORT", referencedColumnName="CODE") },
-      inverseJoinColumns={ @JoinColumn(name="FLIGHTINSTANCE", referencedColumnName="FLIGHTID",unique=true) }
-    )
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "DepatureList",
+               joinColumns = @JoinColumn(name = "CODE"),
+               inverseJoinColumns = @JoinColumn(name = "FLIGHTID") 
+              )
     private List<FlightInstance> departureList;
     
     public Airport() {
