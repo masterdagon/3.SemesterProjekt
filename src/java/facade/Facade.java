@@ -10,6 +10,8 @@ import entity.CityInfo;
 import entity.Customer;
 import entity.FlightInstance;
 import entity.Plane;
+import entity.Reservation;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -200,5 +202,32 @@ public class Facade {
             System.out.println("Error in create createFlightInstance:" + e);
         }
         return flightInstance;
+    }
+    
+    public Reservation getReservation(int id){//Finnish
+        EntityManager em = null;
+        Reservation reservation = null;
+        try {
+            em = getEntityManager();
+            reservation = em.find(Reservation.class, id);
+        } catch (Exception e) {
+            System.out.println("Error in create getFlightInstance:" + e);
+        }
+        return reservation;
+    }
+    public Reservation createReservation(ArrayList<Customer> customer, int flightID) {//finnish
+        EntityManager em = null;
+        Reservation reservation = null;
+        try {
+            em = getEntityManager();
+            FlightInstance fi = em.find(FlightInstance.class, flightID);
+            reservation = new Reservation(customer,fi);
+            em.getTransaction().begin();
+            em.persist(reservation);
+            em.getTransaction().commit();
+         } catch (Exception e) {
+            System.out.println("Error in create createFlightInstance:" + e);
+        }
+        return reservation;
     }
 }

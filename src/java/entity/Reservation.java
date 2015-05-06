@@ -29,7 +29,7 @@ public class Reservation implements Serializable {
     private Integer id;
     @ElementCollection()
     @OneToMany(mappedBy = "reservation")
-    private List<Seat> SeatList;
+    private List<Seat> seatList;
     @OneToOne
     private Customer customer;
     @ManyToOne
@@ -38,9 +38,14 @@ public class Reservation implements Serializable {
     public Reservation() {
     }
 
-    public Reservation(List<Seat> SeatList, Customer customer, FlightInstance flightInstance) {
-        this.SeatList = SeatList;
-        this.customer = customer;
+    public Reservation( ArrayList<Customer> customerList, FlightInstance flightInstance) {
+        this.seatList = new ArrayList();
+        for (int i = 0; i < customerList.size(); i++) {
+            seatList.add(new Seat(flightInstance.getFreeSeats().get(0),customerList.get(i)));
+            flightInstance.removeFreeSeat();
+            
+        }
+        this.customer = customerList.get(0);
         this.flightInstance = flightInstance;
     }
     
