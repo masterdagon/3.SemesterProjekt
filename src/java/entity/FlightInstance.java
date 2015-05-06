@@ -59,6 +59,12 @@ public class FlightInstance implements Serializable {
         this.depature = departure;
         this.plane = plane;
     }
+    
+    public String removeFreeSeat(){
+        String seat = freeSeats.get(0);
+        freeSeats.remove(0);
+        return seat;
+    }
 
     public void addReservation(Reservation reservation){
         reservations.add(reservation);

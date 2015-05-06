@@ -28,10 +28,10 @@ public class Airport implements Serializable {
     private String country;
     @ElementCollection()
     @OneToMany(mappedBy = "arrival")
-    private List<FlightInstance> ArrivalList;
+    private List<FlightInstance> arrivalList;
     @ElementCollection()
     @OneToMany(mappedBy = "depature")
-    private List<FlightInstance> DepartureList;
+    private List<FlightInstance> departureList;
     
     public Airport() {
     }
@@ -40,6 +40,24 @@ public class Airport implements Serializable {
         this.code = code;
         this.city = city;
         this.country = country;
+    }
+    
+    public void addFlightInstanceToArrivalList(FlightInstance flightinstance){
+        arrivalList.add(flightinstance);
+    }
+    
+    public void removeFlightInstanceFromArrivalList(FlightInstance flightinstance){
+        arrivalList.remove(flightinstance);
+              
+    }
+    
+        public void addFlightInstanceTodepartureList(FlightInstance flightinstance){
+        departureList.add(flightinstance);
+    }
+    
+    public void removeFlightInstanceFromdepartureList(FlightInstance flightinstance){
+        departureList.remove(flightinstance);
+              
     }
 
     public String getCode() {
