@@ -5,6 +5,7 @@
  */
 package facade;
 
+import entity.CityInfo;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -59,4 +60,21 @@ public class Facade {
 //        }
 //    }
 
+    public CityInfo createCityInfo(String city,int zip){
+        EntityManager em = null;
+        CityInfo cityinfo = null;
+        try{
+            em = getEntityManager();
+            cityinfo = new CityInfo(city,zip);
+            em.getTransaction().begin();
+            em.persist(cityinfo);
+            em.getTransaction().commit();
+        }catch(Exception e){
+            
+        }
+        return cityinfo;
+    }
+    
+
+    
 }
