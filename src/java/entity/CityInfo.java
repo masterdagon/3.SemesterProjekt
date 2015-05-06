@@ -23,7 +23,6 @@ public class CityInfo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer zip;
-    //private Long id;
     private String city;
     
     @OneToMany(mappedBy = "cityInfo")
@@ -60,7 +59,4 @@ public class CityInfo implements Serializable {
     public void setZip(Integer zip) {
         this.zip = zip;
     }
-
-
-    
 }
