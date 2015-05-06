@@ -5,7 +5,10 @@
  */
 package facade;
 
+import entity.Airport;
 import entity.CityInfo;
+import entity.Customer;
+import entity.Plane;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -42,7 +45,6 @@ public class Facade {
 //            }
 //        }
 //    }
-
 //public Person createPerson(String fName, String lName, String email) {//finnish
 //        EntityManager em = null;
 //        try {
@@ -59,22 +61,65 @@ public class Facade {
 //            }
 //        }
 //    }
-
-    public CityInfo createCityInfo(String city,int zip){
+    public CityInfo createCityInfo(String city, int zip) {
         EntityManager em = null;
         CityInfo cityinfo = null;
-        try{
+        try {
             em = getEntityManager();
-            cityinfo = new CityInfo(city,zip);
+            cityinfo = new CityInfo(city, zip);
             em.getTransaction().begin();
             em.persist(cityinfo);
             em.getTransaction().commit();
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
         return cityinfo;
     }
-    
 
+    public Customer createCustomer(String fname, String lname, String street, String country, int zip) {
+        EntityManager em = null;
+        Customer customer = null;
+        try {
+            em = getEntityManager();
+            CityInfo cityinfo = em.find(CityInfo.class, zip);
+            customer = new Customer(fname, lname, street, country, cityinfo);
+            em.getTransaction().begin();
+            em.persist(customer);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+
+        }
+        return customer;
+    }
+
+    public Plane createPlane(String type, int seats) {
+        EntityManager em = null;
+        Plane plane = null;
+        try {
+            em = getEntityManager();
+            plane = new Plane(type, seats);
+            em.getTransaction().begin();
+            em.persist(plane);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+
+        }
+        return plane;
+    }
+    
+    public Airport createAirport(String code,String city, String country){
+                EntityManager em = null;
+        Airport airport = null;
+        try {
+            em = getEntityManager();
+            airport = new Airport(code, city, country);
+            em.getTransaction().begin();
+            em.persist(airport);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+
+        }
+        return airport;
+    }
     
 }
