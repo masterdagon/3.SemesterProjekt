@@ -23,18 +23,15 @@ public class Seat implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String seatNumber;
- 
-    @ManyToOne
-    private Reservation reservation;
+    
     @OneToOne
     private Customer customer;
     
     public Seat() {
     }
 
-    public Seat(String seatNumber, Reservation reservation, Customer customer) {
+    public Seat(String seatNumber, Customer customer) {
         this.seatNumber = seatNumber;
-        this.reservation = reservation;
         this.customer = customer;
     }
     
@@ -44,14 +41,6 @@ public class Seat implements Serializable {
 
     public void setSeatNumber(String seatNumber) {
         this.seatNumber = seatNumber;
-    }
-
-    public Reservation getReservation() {
-        return reservation;
-    }
-
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
     }
 
     public Customer getCustomer() {

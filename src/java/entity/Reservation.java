@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -27,8 +28,9 @@ public class Reservation implements Serializable {
     private Integer id;
   
    
-    @OneToMany(mappedBy = "reservation")
+    @OneToMany
     private List<Seat> SeatList;
+    @OneToOne
     private Customer customer;
     @ManyToOne
     private FlightInstance flightInstance;

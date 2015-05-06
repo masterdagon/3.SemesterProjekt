@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -27,6 +28,8 @@ public class Customer implements Serializable {
     private Integer id;
     private String fName,lName,street,country;
     private CityInfo cityInfo;
+    @OneToOne(mappedBy = "customer")
+    private Reservation reservation;
 
     public Customer() {
     }
