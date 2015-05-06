@@ -32,8 +32,6 @@ public class PopulateTables {
         customerList.add(c1);
         customerList.add(c2);
         Date date = new Date();
-//        Airport departure = f.getAirport("CPH");
-//        Airport arrival = f.getAirport("FBB");
         FlightInstance fi1 = f.createFlightInstance("SAS", date, 800, "CPH", "FBB", "Airbus A350");
         f.createReservation(customerList,fi1.getFlightID());
     }

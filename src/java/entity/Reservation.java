@@ -27,7 +27,7 @@ public class Reservation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @ElementCollection()
+//    @ElementCollection()
     @OneToMany(mappedBy = "reservation")
     private List<Seat> seatList;
     @OneToOne
@@ -42,9 +42,26 @@ public class Reservation implements Serializable {
         this.seatList = new ArrayList();
         for (int i = 0; i < customerList.size(); i++) {
             seatList.add(new Seat(flightInstance.getFreeSeats().get(0),customerList.get(i),this));
+            flightInstance.removeFreeSeat();
         }
         this.customer = customerList.get(0);
         this.flightInstance = flightInstance;
+    }
+
+    public List<Seat> getSeatList() {
+        return seatList;
+    }
+
+    public void setSeatList(List<Seat> seatList) {
+        this.seatList = seatList;
+    }
+    
+    public void addtoSeatList(Seat seat){
+        this.seatList.add(seat);
+    }
+    
+    public void removefromSeatList(Seat seat){
+        this.seatList.remove(seat);
     }
 
     public FlightInstance getFlightInstance() {

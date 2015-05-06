@@ -11,8 +11,10 @@ import entity.Customer;
 import entity.FlightInstance;
 import entity.Plane;
 import entity.Reservation;
+import entity.Seat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -224,6 +226,9 @@ public class Facade {
             reservation = new Reservation(customer,fi);
             em.getTransaction().begin();
             em.persist(reservation);
+            for (Seat seat : reservation.getSeatList()) {
+                em.persist(seat);
+            }
             em.getTransaction().commit();
          } catch (Exception e) {
             System.out.println("Error in create createFlightInstance:" + e);
