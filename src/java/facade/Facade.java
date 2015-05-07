@@ -257,7 +257,7 @@ public class Facade {
 //            }
 //        }
 //    }
-    public FlightInstance deleteReservation(int reservationID) {//finnish
+    public Reservation deleteReservation(int reservationID) {//finnish
         EntityManager em = null;
         Reservation reservation = null;
         FlightInstance flightInstance = null;
@@ -277,7 +277,7 @@ public class Facade {
          } catch (Exception e) {
             System.out.println("Error in  createReservation:" + e);
         }
-        return flightInstance;
+        return reservation;
     }
     
     public List<FlightInstance> getFlightWithFromToDate(String from,String to,Date date){             
