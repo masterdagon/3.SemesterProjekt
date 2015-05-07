@@ -68,14 +68,6 @@ public class Customer implements Serializable {
     public String getCountry() {
         return country;
     }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
     
     public void setCountry(String country) {
         this.country = country;
