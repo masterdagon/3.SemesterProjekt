@@ -182,7 +182,7 @@ public class Facade {
         return reservation;
     }
 
-    public FlightInstance deleteReservation(int reservationID) {//finnish
+    public Reservation deleteReservation(int reservationID) {//finnish
         EntityManager em = null;
         Reservation reservation = null;
         FlightInstance flightInstance = null;
