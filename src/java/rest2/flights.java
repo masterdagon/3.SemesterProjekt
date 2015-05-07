@@ -8,6 +8,8 @@ package rest2;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import entity.Customer;
 import entity.FlightInstance;
 import entity.Reservation;
 import entity.Seat;
@@ -15,8 +17,11 @@ import facade.Facade;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
@@ -25,6 +30,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import oracle.jdbc.proxy.annotation.Post;
 
 /**
  * REST Web Service
@@ -53,25 +59,28 @@ public class flights {
      */
     @GET
     @Produces("application/json")
-    @Path("/")
+    @Path("test")
     public String test(){
         return gson.toJson("{/'test/':/'test/'}");
     }
     
     @GET
     @Produces("application/json")
-    @Path("{date1}/{date2}")
-    public String getFlightsFromDates(@PathParam("date1") Date date1,@PathParam("date2") Date date2) {;
+    @Path("{departure}/{start}")
+    public String getFlightsFromDates(@PathParam("departure") String dep,@PathParam("start") Long start) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        List<FlightInstance> fiList = f.getFlightWithDates(date1, date2);
+        Date date1 = new Date(start);
+        Date date2=new Date(start);
+
+        List<FlightInstance> fiList = f.getFlightWithDates(date1,date2);
         JsonArray flightList = new JsonArray();
         for (FlightInstance fl : fiList) {
             JsonObject flight = new JsonObject();
             flight.addProperty("airport", fl.getAirline());
             flight.addProperty("price", fl.getPrice());
             flight.addProperty("flightId", fl.getFlightID());
-            flight.addProperty("takeOffDate", df.format(fl.getDate()));
-            flight.addProperty("landingDate", df.format(fl.getDate()));
+            flight.addProperty("takeOffDate", fl.getDate().getTime());
+            flight.addProperty("landingDate", fl.getDate().getTime());
             flight.addProperty("depature", fl.getDepature().getCode());
             flight.addProperty("destination", fl.getArrival().getCode());
             flight.addProperty("seats", fl.getPlane().getTotalSeats().size());
@@ -86,18 +95,16 @@ public class flights {
     @GET
     @Produces("application/json")
     @Path("{from}/{to}/{Date}")
-    public String getFlightsTOFromDate(@PathParam("from") String from, @PathParam("to") String to,@PathParam("date") Date date) {
-        System.out.println("from= " + from + " to= " + to + " date= ");
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        List<FlightInstance> fiList = f.getFlightWithFromToDate(from, to, date);
+    public String getFlightsTOFromDate(@PathParam("from") String from, @PathParam("to") String to,@PathParam("date") Long date) {
+        List<FlightInstance> fiList = f.getFlightWithFromToDate(from, to, new Date(date));
         JsonArray flightList = new JsonArray();
         for (FlightInstance fl : fiList) {
             JsonObject flight = new JsonObject();
             flight.addProperty("airport", fl.getAirline());
             flight.addProperty("price", fl.getPrice());
             flight.addProperty("flightId", fl.getFlightID());
-            flight.addProperty("takeOffDate", df.format(fl.getDate()));
-            flight.addProperty("landingDate", df.format(fl.getDate()));
+            flight.addProperty("takeOffDate", fl.getDate().getTime());
+            flight.addProperty("landingDate", fl.getDate().getTime());
             flight.addProperty("depature", fl.getDepature().getCode());
             flight.addProperty("destination", fl.getArrival().getCode());
             flight.addProperty("seats", fl.getPlane().getTotalSeats().size());
@@ -129,21 +136,24 @@ public class flights {
               ja.add(jo);
           }
           json.add("Passengers",ja);
-        
           
         return gson.toJson(json);
     }
     
-    /**
-     * PUT method for updating or creating an instance of flights
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
-    @PUT
+    @Post
     @Consumes("application/xml")
-    public void putXml(String content) {
+    @Path("{flightID}")
+    public void createReservation(String content,@PathParam("flightID")String flightID) {
+        JsonObject res = new JsonParser().parse(content).getAsJsonObject();
+        ArrayList<Customer> clist = new ArrayList();
+        JsonArray aList = res.getAsJsonArray("Passengers");
+         for (int i = 0; i < aList.size(); i++) {
+             JsonObject cust = aList.get(i).getAsJsonObject();
+             Customer c = new Customer(cust.get("firstName").getAsString(), cust.get("lastName").getAsString(), cust.get("street").getAsString(), cust.get("country").getAsString(), cust.get("city").getAsString());
+             clist.add(c);
+         }
+        f.createReservation(clist, flightID);
     }
-    
     
 }
 

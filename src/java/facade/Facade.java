@@ -210,53 +210,7 @@ public class Facade {
         }
         return reservation;
     }
-//    public void deletePerson(int personId) throws EntityNotFoundException {//finnish
-//        EntityManager em = null;
-//        try {
-//            em = getEntityManager();
-//            Person p = em.find(Person.class, personId);
-//            if (p == null) {
-//                throw new EntityNotFoundException("The person does not exist in database");
-//            }
-//            int aId = 0;
-//            if (p.getAddress() != null) {
-//                aId = p.getAddress().getId();
-//            }
-//            List<Phone> phones = p.getPhones();
-//            List<Hobby> hobbies = p.getHobbies();
-//            if (p.getAddress() != null) {
-//                if (!p.getAddress().getPersons().isEmpty()) {
-//                    if (p.getAddress().getPersons().contains(p)) {
-//                        p.getAddress().removePerson(p);
-//                    }
-//                } else {
-//                }
-//            }
-//
-//            em.getTransaction().begin();
-//            for (Hobby hb : hobbies) {
-//
-//                hb.removePerson(p);
-//
-//                em.merge(hb);
-//            }
-//            for (Phone ph : phones) {
-//                em.remove(ph);
-//            }
-//            p.getPhones().clear();
-//            p.getHobbies().clear();
-//            em.merge(p);
-//            em.remove(p);
-//            em.getTransaction().commit();
-//            if (p.getAddress() != null) {
-//                deleteAddress(aId);
-//            }
-//        } finally {
-//            if (em != null) {
-//                em.close();
-//            }
-//        }
-//    }
+
     public FlightInstance deleteReservation(int reservationID) {//finnish
         EntityManager em = null;
         Reservation reservation = null;
