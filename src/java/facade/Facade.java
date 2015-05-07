@@ -231,7 +231,7 @@ public class Facade {
          } catch (Exception e) {
             System.out.println("Error in  createReservation:" + e);
         }
-        return flightInstance;
+        return reservation;
     }
     
     public List<FlightInstance> getFlightWithFromToDate(String from,String to,Date date){             
