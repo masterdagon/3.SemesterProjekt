@@ -24,13 +24,11 @@ public class PopulateTables {
     static Facade f = new Facade();
     
     public static void main(String[] args) {
-        f.createCityInfo("Kokkedal", 2980);
-        f.createCityInfo("Hundested", 3390);
         f.createAirport("CPH", "Copenhagen","Denmark");
         f.createAirport("FBB", "Berlin", "Germany");
         f.createPlane("Airbus A350", 253);
-        Customer c1 = f.createCustomer("Martin", "Rasmussen", "Egedalsvænge", "Denmark", 2980);
-        Customer c2 = f.createCustomer("Dennis", "Jensen", "Jernbanegade", "Denmark", 3390);
+        Customer c1 = f.createCustomer("Martin", "Rasmussen", "Egedalsvænge", "Denmark", "Kokkedal");
+        Customer c2 = f.createCustomer("Dennis", "Jensen", "Jernbanegade", "Denmark", "Hundested");
         ArrayList<Customer> customerList = new ArrayList();
         customerList.add(c1);
         customerList.add(c2);

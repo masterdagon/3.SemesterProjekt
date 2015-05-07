@@ -6,7 +6,6 @@
 package facade;
 
 import entity.Airport;
-import entity.CityInfo;
 import entity.Customer;
 import entity.FlightInstance;
 import entity.Plane;
@@ -35,33 +34,6 @@ public class Facade {
         return emf.createEntityManager();
     }
 
-    public CityInfo getCityInfo(int zip) {
-        EntityManager em = null;
-        CityInfo cityinfo = null;
-        try {
-            em = getEntityManager();
-            cityinfo = em.find(CityInfo.class, zip);
-        } catch (Exception e) {
-            System.out.println("Error in getCityInfo:" + e);
-        }
-        return cityinfo;
-    }
-
-    public CityInfo createCityInfo(String city, int zip) {
-        EntityManager em = null;
-        CityInfo cityinfo = null;
-        try {
-            em = getEntityManager();
-            cityinfo = new CityInfo(city, zip);
-            em.getTransaction().begin();
-            em.persist(cityinfo);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println("Error in createCityInfo:" + e);
-        }
-        return cityinfo;
-    }
-
     public Customer getCustomer(int id) {
         EntityManager em = null;
         Customer customer = null;
@@ -74,13 +46,12 @@ public class Facade {
         return customer;
     }
 
-    public Customer createCustomer(String fname, String lname, String street, String country, int zip) {
+    public Customer createCustomer(String fname, String lname, String street, String country, String city) {
         EntityManager em = null;
         Customer customer = null;
         try {
             em = getEntityManager();
-            CityInfo cityinfo = em.find(CityInfo.class, zip);
-            customer = new Customer(fname, lname, street, country, cityinfo);
+            customer = new Customer(fname, lname, street, country, city);
             em.getTransaction().begin();
             em.persist(customer);
             em.getTransaction().commit();
