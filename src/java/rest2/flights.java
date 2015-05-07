@@ -70,12 +70,9 @@ public class flights {
     @GET
     @Produces("application/json")
     @Path("{departure}/{start}")
-    public String getFlightsFromDates(@PathParam("departure") String dep,@PathParam("start") Long start) {
+    public String getFlightsFromDates(@PathParam("departure") String dep,@PathParam("date") Long date) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date date1 = new Date(start);
-        Date date2=new Date(start);
-
-        List<FlightInstance> fiList = f.getFlightWithDates(date1,date2);
+        List<FlightInstance> fiList = f.getFlightOnDateFromDepature(new Date(date),dep);
         JsonArray flightList = new JsonArray();
         for (FlightInstance fl : fiList) {
             JsonObject flight = new JsonObject();
@@ -97,9 +94,34 @@ public class flights {
     
     @GET
     @Produces("application/json")
-    @Path("{from}/{to}/{Date}")
-    public String getFlightsTOFromDate(@PathParam("from") String from, @PathParam("to") String to,@PathParam("date") Long date) {
-        List<FlightInstance> fiList = f.getFlightWithFromToDate(from, to, new Date(date));
+    @Path("{departure}/{start}")
+    public String getFlightsFromDates(@PathParam("departure") String dep,@PathParam("date") Long date) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        List<FlightInstance> fiList = f.getFlightOnDateFromDepature(new Date(date),dep);
+        JsonArray flightList = new JsonArray();
+        for (FlightInstance fl : fiList) {
+            JsonObject flight = new JsonObject();
+            flight.addProperty("airport", fl.getAirline());
+            flight.addProperty("price", fl.getPrice());
+            flight.addProperty("flightId", fl.getFlightID());
+            flight.addProperty("takeOffDate", fl.getDate().getTime());
+            flight.addProperty("landingDate", fl.getDate().getTime());
+            flight.addProperty("depature", fl.getDepature().getCode());
+            flight.addProperty("destination", fl.getArrival().getCode());
+            flight.addProperty("seats", fl.getPlane().getTotalSeats().size());
+            flight.addProperty("available seats", fl.getFreeSeats().size());
+            flight.addProperty("bookingCode", Boolean.FALSE);
+            flightList.add(flight);
+        }
+        return gson.toJson(flightList);
+
+    }
+    
+    @GET
+    @Produces("application/json")
+    @Path("/dates/{start}/{end}/{from}")
+    public String getFlightsTOFromDate(@PathParam("from") String from, @PathParam("start") Long start,@PathParam("end") Long end) {
+        List<FlightInstance> fiList = f.getFlightWithDatesAndDepature(new Date(start),new Date(end),from);
         JsonArray flightList = new JsonArray();
         for (FlightInstance fl : fiList) {
             JsonObject flight = new JsonObject();
