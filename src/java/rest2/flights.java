@@ -124,7 +124,7 @@ public class flights {
               JsonObject jo = new JsonObject();
               jo.addProperty("firstName",seat.getCustomer().getfName());
               jo.addProperty("lastName", seat.getCustomer().getlName());
-              jo.addProperty("city", seat.getCustomer().getCityInfo().getCity());
+              jo.addProperty("city", seat.getCustomer().getCity());
               jo.addProperty("country", seat.getCustomer().getCountry());
               jo.addProperty("street", seat.getCustomer().getStreet());
               ja.add(jo);
@@ -148,7 +148,7 @@ public class flights {
             JsonObject jo = new JsonObject();
             jo.addProperty("firstName",seat.getCustomer().getfName());
             jo.addProperty("lastName",r.getCustomer().getlName());
-            jo.addProperty("city",r.getCustomer().getCityInfo().getCity());
+            jo.addProperty("city",r.getCustomer().getCity());
             jo.addProperty("country",r.getCustomer().getCountry());
             jo.addProperty("street",r.getCustomer().getStreet());
             ja.add(jo);
