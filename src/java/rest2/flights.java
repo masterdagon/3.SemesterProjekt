@@ -143,7 +143,7 @@ public class flights {
     
     @Post
     @Consumes("application/xml")
-    @Path("{flightID}")
+    @Path("/{flightID}")
     public void createReservation(String content,@PathParam("flightID")String flightID) {
         JsonObject res = new JsonParser().parse(content).getAsJsonObject();
         ArrayList<Customer> clist = new ArrayList();
