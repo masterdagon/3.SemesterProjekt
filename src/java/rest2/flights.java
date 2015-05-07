@@ -141,20 +141,20 @@ public class flights {
         return gson.toJson(json);
     }
     
-//    @Post
-//    @Consumes("application/xml")
-//    @Path("{flightID}")
-//    public void createReservation(String content,@PathParam("flightID")String flightID) {
-//        JsonObject res = new JsonParser().parse(content).getAsJsonObject();
-//        ArrayList<Customer> clist = new ArrayList();
-//        JsonArray aList = res.getAsJsonArray("Passengers");
-//         for (int i = 0; i < aList.size(); i++) {
-//             JsonObject cust = aList.get(i).getAsJsonObject();
-//             Customer c = new Customer(cust.get("firstName").getAsString(), cust.get("lastName").getAsString(), cust.get("street").getAsString(), cust.get("country").getAsString(), cust.get("city").getAsString());
-//             clist.add(c);
-//         }
-//        f.createReservation(clist, flightID);
-//    }
+    @Post
+    @Consumes("application/xml")
+    @Path("{flightID}")
+    public void createReservation(String content,@PathParam("flightID")String flightID) {
+        JsonObject res = new JsonParser().parse(content).getAsJsonObject();
+        ArrayList<Customer> clist = new ArrayList();
+        JsonArray aList = res.getAsJsonArray("Passengers");
+         for (int i = 0; i < aList.size(); i++) {
+             JsonObject cust = aList.get(i).getAsJsonObject();
+             Customer c = new Customer(cust.get("firstName").getAsString(), cust.get("lastName").getAsString(), cust.get("street").getAsString(), cust.get("country").getAsString(), cust.get("city").getAsString());
+             clist.add(c);
+         }
+        f.createReservation(clist, flightID);
+    }
     
     @DELETE
     @Produces("application/json")

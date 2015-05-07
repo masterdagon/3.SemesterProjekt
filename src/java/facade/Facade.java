@@ -163,7 +163,7 @@ public class Facade {
         }
         return reservation;
     }
-    public Reservation createReservation(ArrayList<Customer> customer, int flightID) {//finnish
+    public Reservation createReservation(ArrayList<Customer> customer, String flightID) {//finnish
         EntityManager em = null;
         Reservation reservation = null;
         try {

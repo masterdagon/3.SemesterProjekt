@@ -33,7 +33,7 @@ public class FlightInstance implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "FLIGHTID")
-    private Integer flightID;
+    private String flightID;
     private String airline;
     @Temporal(TemporalType.DATE)
     private Date date;
@@ -83,11 +83,11 @@ public class FlightInstance implements Serializable {
         reservations.remove(reservation);
     }
     
-    public Integer getFlightID() {
+    public String getFlightID() {
         return flightID;
     }
 
-    public void setFlightID(Integer flightID) {
+    public void setFlightID(String flightID) {
         this.flightID = flightID;
     }
 
