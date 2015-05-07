@@ -95,7 +95,7 @@ public class flights {
     @GET
     @Produces("application/json")
     @Path("{departure}/{start}")
-    public String getFlightsFromDates(@PathParam("departure") String dep,@PathParam("date") Long date) {
+    public String getFlightsFromDatesAndDeparture(@PathParam("departure") String dep,@PathParam("date") Long date) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         List<FlightInstance> fiList = f.getFlightOnDateFromDepature(new Date(date),dep);
         JsonArray flightList = new JsonArray();
