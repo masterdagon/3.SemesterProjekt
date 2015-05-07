@@ -27,6 +27,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
@@ -153,6 +154,27 @@ public class flights {
              clist.add(c);
          }
         f.createReservation(clist, flightID);
+    @DELETE
+    @Produces("application/json")
+    @Path("/{reservationId}")
+    public String deleteReservation(@PathParam("reservationId")String reservationId){
+        Reservation r = f.deleteReservation(Integer.parseInt(reservationId));
+        JsonObject json = new JsonObject();
+        json.addProperty("reservationID",r.getId());
+        json.addProperty("flightID",r.getFlightInstance().getFlightID());
+        JsonArray ja = new JsonArray();
+        for(Seat seat:r.getSeatList()){
+            JsonObject jo = new JsonObject();
+            jo.addProperty("firstName",seat.getCustomer().getfName());
+            jo.addProperty("lastName",r.getCustomer().getlName());
+            jo.addProperty("city",r.getCustomer().getCityInfo().getCity());
+            jo.addProperty("country",r.getCustomer().getCountry());
+            jo.addProperty("street",r.getCustomer().getStreet());
+            ja.add(jo);
+        }
+        json.add("Passengers",ja);
+        json.addProperty("totalPrice",(r.getFlightInstance().getPrice())*r.getSeatList().size());
+        return gson.toJson(json);
     }
     
 }
