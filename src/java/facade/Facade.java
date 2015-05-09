@@ -18,6 +18,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import rest2.exception.FlightNotFoundException;
+import rest2.exception.ReservationNotFoundException;
+import rest2.exception.SoldOutException;
 
 /**
  *
@@ -162,23 +164,31 @@ public class Facade {
         return flightInstance;
     }
     
-    public Reservation getReservation(int id){//Finnish
+    public Reservation getReservation(int id) throws ReservationNotFoundException{//Finnish
         EntityManager em = null;
         Reservation reservation = null;
         try {
             em = getEntityManager();
             reservation = em.find(Reservation.class, id);
-        } catch (Exception e) {
-            System.out.println("Error in  getReservation:" + e);
-        }
+            if(reservation == null){
+                throw new ReservationNotFoundException("Reservation does not exist");
+            }
         return reservation;
+         } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
-    public Reservation createReservation(ArrayList<Customer> customer, String flightID) {//finnish
+    public Reservation createReservation(ArrayList<Customer> customer, String flightID) throws SoldOutException {//finnish
         EntityManager em = null;
         Reservation reservation = null;
         try {
             em = getEntityManager();
             FlightInstance fi = em.find(FlightInstance.class, flightID);
+            if(fi.getFreeSeats().size()<customer.size()){
+                throw new SoldOutException("There are not enough tickets left");
+            }
             reservation = new Reservation(customer,fi);
             em.getTransaction().begin();
             em.persist(reservation);
@@ -186,19 +196,24 @@ public class Facade {
                 em.persist(seat);
             }
             em.getTransaction().commit();
-         } catch (Exception e) {
-            System.out.println("Error in  createReservation:" + e);
-        }
         return reservation;
+         } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
-    public Reservation deleteReservation(int reservationID) {//finnish
+    public Reservation deleteReservation(int reservationID) throws ReservationNotFoundException {//finnish
         EntityManager em = null;
         Reservation reservation = null;
         FlightInstance flightInstance = null;
         try {
             em = getEntityManager();
             reservation = em.find(Reservation.class, reservationID);
+            if(reservation == null){
+                throw new ReservationNotFoundException("Reservation does not exist");
+            }
             flightInstance = reservation.getFlightInstance();
            
             em.getTransaction().begin();
@@ -209,10 +224,13 @@ public class Facade {
             }
             em.remove(reservation);
             em.getTransaction().commit();
-         } catch (Exception e) {
-            System.out.println("Error in  createReservation:" + e);
-        }
+         
         return reservation;
+         } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
     
     public List<FlightInstance> getFlightWithFromToDate(String from,String to,Date date) throws FlightNotFoundException{             
@@ -228,10 +246,8 @@ public class Facade {
                     .setParameter("arrival", ta)
                     .setParameter("date", date)
                     .getResultList();
-            System.out.println("is emty = " +flightInstanceList.isEmpty() );
             if(flightInstanceList.isEmpty()){
-//                throw new FlightNotFoundException("No availaible flights from: " + from + " to: "+to+" on: "+date+" does not exist");
-                throw new FlightNotFoundException("No availaible flights ");
+                throw new FlightNotFoundException("No availaible flights from: " + from + " to: "+to+" on: "+date+" does not exist");
             }
             return flightInstanceList;
         } finally {
@@ -241,23 +257,7 @@ public class Facade {
         }
     }
     
-    public List<FlightInstance> getFlightWithDates(Date date1,Date date2){             
-        EntityManager em = null;
-        List<FlightInstance> flightInstanceList = null;
-        try {
-            em = getEntityManager();
-            flightInstanceList = new ArrayList();
-            flightInstanceList = em.createQuery("select f from FlightInstance f where f.date BETWEEN :date1 AND :date2")
-                    .setParameter("date1", date1)
-                    .setParameter("date2", date2)
-                    .getResultList();
-        } catch (Exception e) {
-            System.out.println("Error in getFlightInstance:" + e);
-        }
-        return flightInstanceList;
-    }
-    
-    public List<FlightInstance> getFlightWithDatesAndDepature(Date date1,Date date2,String from){             
+    public List<FlightInstance> getFlightWithDatesAndDepature(Date date1,Date date2,String from) throws FlightNotFoundException{             
         EntityManager em = null;
         List<FlightInstance> flightInstanceList = null;
         try {
@@ -269,13 +269,18 @@ public class Facade {
                     .setParameter("date1", date1)
                     .setParameter("date2", date2)
                     .getResultList();
-        } catch (Exception e) {
-            System.out.println("Error in getFlightInstance:" + e);
+          if(flightInstanceList.isEmpty()){
+                throw new FlightNotFoundException("No availaible flights from: " + from + " within: "+date1+" - "+date2);
+            }
+            return flightInstanceList;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
         }
-        return flightInstanceList;
     }
     
-    public List<FlightInstance> getFlightOnDateFromDepature(Date date,String from){             
+    public List<FlightInstance> getFlightOnDateFromDepature(Date date,String from) throws FlightNotFoundException{             
         EntityManager em = null;
         List<FlightInstance> flightInstanceList = null;
         try {
@@ -286,9 +291,35 @@ public class Facade {
                     .setParameter("depature", fa)
                     .setParameter("date", date)
                     .getResultList();
-        } catch (Exception e) {
-            System.out.println("Error in getFlightInstance:" + e);
+        if(flightInstanceList.isEmpty()){
+                throw new FlightNotFoundException("No availaible flights from: " + from + " on: "+date);
+            }
+            return flightInstanceList;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
         }
-        return flightInstanceList;
     }
 }
+
+//public List<FlightInstance> getFlightWithDates(Date date1,Date date2){             
+//        EntityManager em = null;
+//        List<FlightInstance> flightInstanceList = null;
+//        try {
+//            em = getEntityManager();
+//            flightInstanceList = new ArrayList();
+//            flightInstanceList = em.createQuery("select f from FlightInstance f where f.date BETWEEN :date1 AND :date2")
+//                    .setParameter("date1", date1)
+//                    .setParameter("date2", date2)
+//                    .getResultList();
+//        if(flightInstanceList.isEmpty()){
+//                throw new FlightNotFoundException("No availaible flights from: " + from + " to: "+to+" on: "+date+" does not exist");
+//            }
+//            return flightInstanceList;
+//        } finally {
+//            if (em != null) {
+//                em.close();
+//            }
+//        }
+//    }

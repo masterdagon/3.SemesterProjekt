@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Persistence;
+import rest2.exception.SoldOutException;
 
 /**
  *
@@ -23,7 +24,7 @@ public class PopulateTables {
     
     static Facade f = new Facade();
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SoldOutException {
         f.createAirport("CPH", "Copenhagen","Denmark");
         f.createAirport("FBB", "Berlin", "Germany");
         f.createPlane("Airbus A350", 253);

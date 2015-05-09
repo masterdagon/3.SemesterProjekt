@@ -12,27 +12,23 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
-
-
 
 /**
  *
  * @author Dennnis
  */
-@Provider
-public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
+public class SoldOutExceptionMapper implements ExceptionMapper<SoldOutException> {
 
     static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     @Context
     ServletContext context;
 
     @Override
-    public Response toResponse(Throwable e) {
+    public Response toResponse(SoldOutException e) {
         boolean isDebug = context.getInitParameter("debug").equals("true");
-        ErrorMessage err = new ErrorMessage(e, 500, isDebug);
+        ErrorMessage err = new ErrorMessage(e, 2, isDebug);
         err.setDescription("You tried to call ...");
-        return Response.status(500)
+        return Response.status(404)
                 .entity(gson.toJson(err))
                 .type(MediaType.APPLICATION_JSON).
                 build();
