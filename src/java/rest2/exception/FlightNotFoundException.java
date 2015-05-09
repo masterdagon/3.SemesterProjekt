@@ -9,12 +9,10 @@ package rest2.exception;
  *
  * @author Dennnis
  */
-public class EntityNotFoundException extends Exception{
-
+public class FlightNotFoundException extends Exception {
     
-    public EntityNotFoundException(String message) {
+    public FlightNotFoundException(String message) {
         super(message);
         
     }
-    
 }

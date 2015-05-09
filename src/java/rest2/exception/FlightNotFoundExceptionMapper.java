@@ -5,8 +5,6 @@
  */
 package rest2.exception;
 
-//import com.google.gson.Gson;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javax.servlet.ServletContext;
@@ -21,21 +19,21 @@ import javax.ws.rs.ext.Provider;
  * @author Dennnis
  */
 @Provider
-public class EntityNotFoundExceptionMapper implements ExceptionMapper<EntityNotFoundException> {
-    
+public class FlightNotFoundExceptionMapper implements ExceptionMapper<FlightNotFoundException> {
+
     static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     @Context
-    ServletContext context;  
-    
+    ServletContext context;
+
     @Override
-    public Response toResponse(EntityNotFoundException e) {
+    public Response toResponse(FlightNotFoundException e) {
         boolean isDebug = context.getInitParameter("debug").equals("true");
-        ErrorMessage err = new ErrorMessage(e, 404, isDebug);
+        ErrorMessage err = new ErrorMessage(e, 1, isDebug);
         err.setDescription("You tried to call ...");
         return Response.status(404)
                 .entity(gson.toJson(err))
                 .type(MediaType.APPLICATION_JSON).
                 build();
     }
-    
+
 }

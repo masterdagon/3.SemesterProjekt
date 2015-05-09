@@ -34,6 +34,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import oracle.jdbc.proxy.annotation.Post;
+import rest2.exception.FlightNotFoundException;
 
 /**
  * REST Web Service
@@ -69,9 +70,11 @@ public class flights {
     
     @GET
     @Produces("application/json")
-    @Path("{departure}/{start}")
+    @Path("{departure}/{date}")
     public String getFlightsFromDates(@PathParam("departure") String dep,@PathParam("date") Long date) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("this is the dates "+ date);
+//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//        Date newDate = new Date(date); 
         List<FlightInstance> fiList = f.getFlightOnDateFromDepature(new Date(date),dep);
         JsonArray flightList = new JsonArray();
         for (FlightInstance fl : fiList) {
@@ -94,10 +97,10 @@ public class flights {
     
     @GET
     @Produces("application/json")
-    @Path("{departure}/{start}")
-    public String getFlightsFromDatesAndDeparture(@PathParam("departure") String dep,@PathParam("date") Long date) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        List<FlightInstance> fiList = f.getFlightOnDateFromDepature(new Date(date),dep);
+    @Path("/{from}/{to}/{date}")
+    public String getFlightsFromTOOnDate(@PathParam("from") String from, @PathParam("to") String to,@PathParam("date") Long date) throws FlightNotFoundException{
+        System.out.println("date = "+new Date(date));
+        List<FlightInstance> fiList = f.getFlightWithFromToDate(from,to,new Date(date));
         JsonArray flightList = new JsonArray();
         for (FlightInstance fl : fiList) {
             JsonObject flight = new JsonObject();
@@ -120,7 +123,7 @@ public class flights {
     @GET
     @Produces("application/json")
     @Path("/dates/{start}/{end}/{from}")
-    public String getFlightsTOFromDate(@PathParam("from") String from, @PathParam("start") Long start,@PathParam("end") Long end) {
+    public String getFlightsTOFromDate(@PathParam("from") String from, @PathParam("start") Long start,@PathParam("end") Long end) throws FlightNotFoundException {
         List<FlightInstance> fiList = f.getFlightWithDatesAndDepature(new Date(start),new Date(end),from);
         JsonArray flightList = new JsonArray();
         for (FlightInstance fl : fiList) {
@@ -204,30 +207,3 @@ public class flights {
     }
     
 }
-
-//@GET
-//    @Produces("application/json")
-//    @Path("/{startAirport}/{:endAirport}/{date}")
-//    public String getAvailibleFlights_Start_End_Date(@PathParam("startAirport") String startAirport,@PathParam("endAirport") String endAirport,@PathParam("date") String date) throws ParseException{
-//        DateFormat df = DateFormat.getInstance();
-//        Date d = df.parse(date);
-//        List<FlightInstance> list = f.getFlightWithFromToDate(startAirport, endAirport, d);
-//        JsonArray ja = new JsonArray();
-//        for(FlightInstance flight:list){
-//          JsonObject json = new JsonObject();
-//          json.addProperty("airline", flight.getAirline());
-//          json.addProperty("price", flight.getPrice());
-//          json.addProperty("flightId",flight.getFlightID());
-//          json.addProperty("takeOffDate",df.format(flight.getDate()));
-//          json.addProperty("landingDate",df.format(flight.getDate()));
-//          json.addProperty("depature",flight.getDepature().getCode());
-//          json.addProperty("destination",flight.getArrival().getCode());
-//          json.addProperty("seats",String.valueOf(flight.getPlane().getTotalSeats()));
-//          json.addProperty("available seats",String.valueOf(flight.getFreeSeats()));
-//          json.addProperty("bookingCode",flight.getBookingCode());
-//          ja.add(json);
-//          
-//        }
-//        
-//        return gson.toJson(ja);
-//    }

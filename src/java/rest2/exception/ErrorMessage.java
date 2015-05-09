@@ -14,7 +14,7 @@ import java.io.StringWriter;
  */
 public class ErrorMessage {
 
-    public ErrorMessage(Throwable ex, int code, boolean debug) {
+   public ErrorMessage(Throwable ex, int code, boolean debug) {
         this.code = code;
         this.message = ex.getMessage();
         this.description = ex.getMessage();
@@ -32,5 +32,6 @@ public class ErrorMessage {
     public void setDescription(String description) {
         this.description = description;
     }
+    
     
 }
