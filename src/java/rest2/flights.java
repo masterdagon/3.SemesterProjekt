@@ -75,14 +75,13 @@ public class flights {
     @Produces("application/json")
     @Path("{departure}/{date}")
     public String getFlightsFromDates(@PathParam("departure") String dep,@PathParam("date") String date) throws FlightNotFoundException, InvalidArgumentException {
-        System.out.println("this is the dates "+ date);
         boolean isNumeric = true;
         Long parsedDate=null;
         try {
             parsedDate = Long.parseLong(date);
         } catch (NumberFormatException nfe) {
             isNumeric = false;
-            throw new InvalidArgumentException("Date is ");
+            throw new InvalidArgumentException("Date is not a number(Long)");
         }
         if(isNumeric){
             List<FlightInstance> fiList = f.getFlightOnDateFromDepature(new Date(parsedDate),dep);
@@ -109,9 +108,17 @@ public class flights {
     @GET
     @Produces("application/json")
     @Path("/{from}/{to}/{date}")
-    public String getFlightsFromTOOnDate(@PathParam("from") String from, @PathParam("to") String to,@PathParam("date") Long date) throws FlightNotFoundException{
-        System.out.println("date = "+new Date(date));
-        List<FlightInstance> fiList = f.getFlightWithFromToDate(from,to,new Date(date));
+    public String getFlightsFromTOOnDate(@PathParam("from") String from, @PathParam("to") String to,@PathParam("date") String date) throws FlightNotFoundException, InvalidArgumentException{
+        boolean isNumeric = true;
+        Long parsedDate=null;
+        try {
+            parsedDate = Long.parseLong(date);
+        } catch (NumberFormatException nfe) {
+            isNumeric = false;
+            throw new InvalidArgumentException("Date is not a number(Long)");
+        }
+        if(isNumeric){
+        List<FlightInstance> fiList = f.getFlightWithFromToDate(from,to,new Date(parsedDate));
         JsonArray flightList = new JsonArray();
         for (FlightInstance fl : fiList) {
             JsonObject flight = new JsonObject();
@@ -128,14 +135,26 @@ public class flights {
             flightList.add(flight);
         }
         return gson.toJson(flightList);
-
+        }
+        return null;
     }
     
     @GET
     @Produces("application/json")
     @Path("/dates/{start}/{end}/{from}")
-    public String getFlightsTOFromDate(@PathParam("from") String from, @PathParam("start") Long start,@PathParam("end") Long end) throws FlightNotFoundException {
-        List<FlightInstance> fiList = f.getFlightWithDatesAndDepature(new Date(start),new Date(end),from);
+    public String getFlightsTOFromDate(@PathParam("from") String from, @PathParam("start") String start,@PathParam("end") String end) throws FlightNotFoundException, InvalidArgumentException {
+        boolean isNumeric = true;
+        Long parsedDate1=null;
+        Long parsedDate2=null;
+        try {
+            parsedDate1 = Long.parseLong(start);
+            parsedDate2 = Long.parseLong(end);
+        } catch (NumberFormatException nfe) {
+            isNumeric = false;
+            throw new InvalidArgumentException("Date is not a number(Long)");
+        }
+        if(isNumeric){
+        List<FlightInstance> fiList = f.getFlightWithDatesAndDepature(new Date(parsedDate1),new Date(parsedDate2),from);
         JsonArray flightList = new JsonArray();
         for (FlightInstance fl : fiList) {
             JsonObject flight = new JsonObject();
@@ -152,7 +171,8 @@ public class flights {
             flightList.add(flight);
         }
         return gson.toJson(flightList);
-
+        }
+        return null;
     }
     
     @GET
