@@ -24,6 +24,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import rest2.exception.FlightNotFoundException;
+import rest2.exception.ReservationNotFoundException;
+import rest2.exception.SoldOutException;
 
 /**
  *
@@ -114,7 +116,7 @@ public class FacadeTest {
     }
 
     @Test
-    public void createReservation() {
+    public void createReservation() throws SoldOutException {
         Airport a = f.createAirport("code1", "city1", "country1");
         Airport d = f.createAirport("code2", "city2", "country2");
         Plane plane = f.createPlane("testplane", 25);
@@ -129,7 +131,7 @@ public class FacadeTest {
     }
 
     @Test
-    public void getFlightOnDateFromDepature() {
+    public void getFlightOnDateFromDepature() throws FlightNotFoundException {
         List<FlightInstance> fi = f.getFlightOnDateFromDepature(date, "departure");
         assertEquals("departure", fi.get(0).getDepature().getCode());
 
@@ -148,7 +150,7 @@ public class FacadeTest {
     }
     
     @Test
-    public void getReservation() throws FlightNotFoundException {
+    public void getReservation() throws FlightNotFoundException, ReservationNotFoundException {
         em.getTransaction().begin();
         Reservation r = new Reservation();
         em.persist(r);
@@ -158,7 +160,7 @@ public class FacadeTest {
     }
     
     @Test
-    public void deleteReservation() throws FlightNotFoundException {
+    public void deleteReservation() throws FlightNotFoundException, SoldOutException, ReservationNotFoundException {
         ArrayList<Customer> list = new ArrayList();
         list.add(customer1);
         list.add(customer2);
