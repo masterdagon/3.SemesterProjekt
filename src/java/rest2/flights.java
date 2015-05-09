@@ -82,7 +82,7 @@ public class flights {
             parsedDate = Long.parseLong(date);
         } catch (NumberFormatException nfe) {
             isNumeric = false;
-            throw new InvalidArgumentException("Date is not a number(long)");
+            throw new InvalidArgumentException("Date is ");
         }
         if(isNumeric){
             List<FlightInstance> fiList = f.getFlightOnDateFromDepature(new Date(parsedDate),dep);
