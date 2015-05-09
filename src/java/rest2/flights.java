@@ -35,6 +35,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import oracle.jdbc.proxy.annotation.Post;
 import rest2.exception.FlightNotFoundException;
+import rest2.exception.InvalidArgumentException;
+import rest2.exception.ReservationNotFoundException;
+import rest2.exception.SoldOutException;
 
 /**
  * REST Web Service
@@ -71,11 +74,18 @@ public class flights {
     @GET
     @Produces("application/json")
     @Path("{departure}/{date}")
-    public String getFlightsFromDates(@PathParam("departure") String dep,@PathParam("date") Long date) {
+    public String getFlightsFromDates(@PathParam("departure") String dep,@PathParam("date") String date) throws FlightNotFoundException, InvalidArgumentException {
         System.out.println("this is the dates "+ date);
-//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-//        Date newDate = new Date(date); 
-        List<FlightInstance> fiList = f.getFlightOnDateFromDepature(new Date(date),dep);
+        boolean isNumeric = true;
+        Long parsedDate=null;
+        try {
+            parsedDate = Long.parseLong(date);
+        } catch (NumberFormatException nfe) {
+            isNumeric = false;
+            throw new InvalidArgumentException("Date is not a number(long)");
+        }
+        if(isNumeric){
+            List<FlightInstance> fiList = f.getFlightOnDateFromDepature(new Date(parsedDate),dep);
         JsonArray flightList = new JsonArray();
         for (FlightInstance fl : fiList) {
             JsonObject flight = new JsonObject();
@@ -92,7 +102,8 @@ public class flights {
             flightList.add(flight);
         }
         return gson.toJson(flightList);
-
+        }
+        return null;
     }
     
     @GET
@@ -147,7 +158,7 @@ public class flights {
     @GET
     @Produces("application/json")
     @Path("/{reservationId}")
-    public String getReservation(@PathParam("reservationId") String reservationId) throws ParseException{
+    public String getReservation(@PathParam("reservationId") String reservationId) throws ParseException, ReservationNotFoundException{
          Reservation r = f.getReservation(Integer.parseInt(reservationId));
  
           JsonObject json = new JsonObject();
@@ -171,7 +182,7 @@ public class flights {
     @POST
     @Consumes("application/xml")
     @Path("/{flightID}")
-    public void createReservation(String content,@PathParam("flightID")String flightID) {
+    public void createReservation(String content,@PathParam("flightID")String flightID) throws SoldOutException {
         JsonObject res = new JsonParser().parse(content).getAsJsonObject();
         ArrayList<Customer> clist = new ArrayList();
         JsonArray aList = res.getAsJsonArray("Passengers");
@@ -186,7 +197,7 @@ public class flights {
     @DELETE
     @Produces("application/json")
     @Path("/{reservationId}")
-    public String deleteReservation(@PathParam("reservationId")String reservationId){
+    public String deleteReservation(@PathParam("reservationId")String reservationId) throws ReservationNotFoundException{
         Reservation r = f.deleteReservation(Integer.parseInt(reservationId));
         JsonObject json = new JsonObject();
         json.addProperty("reservationID",r.getId());
