@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -27,7 +26,6 @@ import javax.persistence.TemporalType;
  * @author Dennnis
  */
 @Entity
-@Table(name = "FLIGHTINSTANCE")
 public class FlightInstance implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,8 +34,10 @@ public class FlightInstance implements Serializable {
     private String flightID;
     private String airline;
     @Temporal(TemporalType.DATE)
-    private Date date;
+    private Date flyDate;
+    @ManyToOne
     private Airport arrival = null;
+    @ManyToOne
     private Airport  depature = null;
     private double price;
     @ManyToOne
@@ -53,7 +53,7 @@ public class FlightInstance implements Serializable {
 
     public FlightInstance(String airline, Date date, double price,Airport arrival,Airport departure,Plane plane) {
         this.airline = airline;
-        this.date = date;
+        this.flyDate = date;
         this.price = price;
         this.freeSeats = plane.getTotalSeats();
         this.reservations = new ArrayList();
@@ -62,8 +62,6 @@ public class FlightInstance implements Serializable {
         this.depature = departure;
         this.plane = plane;
     }
-    
-    
     
     public String removeFreeSeat(){
         String seat = freeSeats.get(0);
@@ -100,11 +98,11 @@ public class FlightInstance implements Serializable {
     }
 
     public Date getDate() {
-        return date;
+        return flyDate;
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        this.flyDate = date;
     }
 
     public Airport getArrival() {

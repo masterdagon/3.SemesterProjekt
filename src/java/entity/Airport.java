@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,18 +26,11 @@ import javax.persistence.OneToMany;
 public class Airport implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "CODE")
     private String code;
     private String city;
     private String country;
     
-//    @JoinTable
-//    (
-//      name="Arrival_LIST",
-//      joinColumns={ @JoinColumn(name="AIRPORT", referencedColumnName="CODE") },
-//      inverseJoinColumns={ @JoinColumn(name="FLIGHTINSTANCE", referencedColumnName="FLIGHTID",unique=true) }
-//    )
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "ArrivalList",
                joinColumns = @JoinColumn(name = "CODE"),
