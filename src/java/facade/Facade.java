@@ -241,7 +241,7 @@ public class Facade {
             Airport fa = em.find(Airport.class, from);
             Airport ta = em.find(Airport.class, to);
             flightInstanceList = new ArrayList();
-            flightInstanceList = em.createQuery("select f from FlightInstance f where f.arrival=:arrival AND f.depature=:depature AND f.date=:date")
+            flightInstanceList = em.createQuery("select f from FlightInstance f where f.arrival=:arrival AND f.depature=:depature AND f.flyDate=:date")
                     .setParameter("depature", fa)
                     .setParameter("arrival", ta)
                     .setParameter("date", date)
@@ -264,7 +264,7 @@ public class Facade {
             em = getEntityManager();
             Airport fa = em.find(Airport.class, from);
             flightInstanceList = new ArrayList();
-            flightInstanceList = em.createQuery("select f from FlightInstance f where f.depature=:depature AND f.date BETWEEN :date1 AND :date2")
+            flightInstanceList = em.createQuery("select f from FlightInstance f where f.depature=:depature AND f.flyDate BETWEEN :date1 AND :date2")
                     .setParameter("depature", fa)
                     .setParameter("date1", date1)
                     .setParameter("date2", date2)
@@ -287,7 +287,7 @@ public class Facade {
             em = getEntityManager();
             Airport fa = em.find(Airport.class, from);
             flightInstanceList = new ArrayList();
-            flightInstanceList = em.createQuery("select f from FlightInstance f where f.depature=:depature AND f.date = :date")
+            flightInstanceList = em.createQuery("select f from FlightInstance f where f.depature=:depature AND f.flyDate = :date")
                     .setParameter("depature", fa)
                     .setParameter("date", date)
                     .getResultList();
