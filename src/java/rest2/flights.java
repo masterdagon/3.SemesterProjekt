@@ -88,7 +88,7 @@ public class flights {
         JsonArray flightList = new JsonArray();
         for (FlightInstance fl : fiList) {
             JsonObject flight = new JsonObject();
-            flight.addProperty("airport", fl.getAirline());
+            flight.addProperty("airline", fl.getAirline());
             flight.addProperty("price", fl.getPrice());
             flight.addProperty("flightId", fl.getFlightID());
             flight.addProperty("takeOffDate", fl.getDate().getTime());
@@ -97,7 +97,7 @@ public class flights {
             flight.addProperty("destination", fl.getArrival().getCode());
             flight.addProperty("seats", fl.getPlane().getTotalSeats().size());
             flight.addProperty("available seats", fl.getFreeSeats().size());
-            flight.addProperty("bookingCode", Boolean.FALSE);
+            flight.addProperty("bookingCode", Boolean.TRUE);
             flightList.add(flight);
         }
         return gson.toJson(flightList);
@@ -122,7 +122,7 @@ public class flights {
         JsonArray flightList = new JsonArray();
         for (FlightInstance fl : fiList) {
             JsonObject flight = new JsonObject();
-            flight.addProperty("airport", fl.getAirline());
+            flight.addProperty("airline", fl.getAirline());
             flight.addProperty("price", fl.getPrice());
             flight.addProperty("flightId", fl.getFlightID());
             flight.addProperty("takeOffDate", fl.getDate().getTime());
@@ -131,7 +131,7 @@ public class flights {
             flight.addProperty("destination", fl.getArrival().getCode());
             flight.addProperty("seats", fl.getPlane().getTotalSeats().size());
             flight.addProperty("available seats", fl.getFreeSeats().size());
-            flight.addProperty("bookingCode", Boolean.FALSE);
+            flight.addProperty("bookingCode", Boolean.TRUE);
             flightList.add(flight);
         }
         return gson.toJson(flightList);
@@ -158,7 +158,7 @@ public class flights {
         JsonArray flightList = new JsonArray();
         for (FlightInstance fl : fiList) {
             JsonObject flight = new JsonObject();
-            flight.addProperty("airport", fl.getAirline());
+            flight.addProperty("airline", fl.getAirline());
             flight.addProperty("price", fl.getPrice());
             flight.addProperty("flightId", fl.getFlightID());
             flight.addProperty("takeOffDate", fl.getDate().getTime());
@@ -167,7 +167,7 @@ public class flights {
             flight.addProperty("destination", fl.getArrival().getCode());
             flight.addProperty("seats", fl.getPlane().getTotalSeats().size());
             flight.addProperty("available seats", fl.getFreeSeats().size());
-            flight.addProperty("bookingCode", Boolean.FALSE);
+            flight.addProperty("bookingCode", Boolean.TRUE);
             flightList.add(flight);
         }
         return gson.toJson(flightList);
