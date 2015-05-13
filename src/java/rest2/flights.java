@@ -202,7 +202,7 @@ public class flights {
     @POST
     @Consumes("application/json")
     @Path("/{flightID}")
-    public Reservation createReservation(String content,@PathParam("flightID")String flightID) throws SoldOutException {
+    public String createReservation(String content,@PathParam("flightID")String flightID) throws SoldOutException, FlightNotFoundException {
         JsonObject res = new JsonParser().parse(content).getAsJsonObject();
         ArrayList<Customer> clist = new ArrayList();
         JsonArray aList = res.get("Passengers").getAsJsonArray();
@@ -211,8 +211,23 @@ public class flights {
              Customer c = new Customer(cust.get("firstName").getAsString(), cust.get("lastName").getAsString(), cust.get("street").getAsString(), cust.get("country").getAsString(), cust.get("city").getAsString());
              clist.add(c);
          }
-        System.out.println(clist.size());
-        return f.createReservation(clist, flightID);
+        Reservation r = f.createReservation(clist, flightID);
+        JsonObject json = new JsonObject();
+        json.addProperty("reservationID",r.getId());
+        json.addProperty("flightID",r.getFlightInstance().getFlightID());
+        JsonArray ja = new JsonArray();
+        for(Seat seat:r.getSeatList()){
+            JsonObject jo = new JsonObject();
+            jo.addProperty("firstName",seat.getCustomer().getfName());
+            jo.addProperty("lastName",r.getCustomer().getlName());
+            jo.addProperty("city",r.getCustomer().getCity());
+            jo.addProperty("country",r.getCustomer().getCountry());
+            jo.addProperty("street",r.getCustomer().getStreet());
+            ja.add(jo);
+        }
+        json.add("Passengers",ja);
+        json.addProperty("totalPrice",(r.getFlightInstance().getPrice())*r.getSeatList().size());
+        return gson.toJson(json);
     }
     
     @DELETE

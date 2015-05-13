@@ -180,15 +180,16 @@ public class Facade {
             }
         }
     }
-    public Reservation createReservation(ArrayList<Customer> customer, String flightID) throws SoldOutException {//finnish
+    public Reservation createReservation(ArrayList<Customer> customer, String flightID) throws SoldOutException, FlightNotFoundException {//finnish
         EntityManager em = null;
         Reservation reservation = null;
         FlightInstance flightInstance=null;
         try {
             em = getEntityManager();
-            System.out.println(flightID);
             flightInstance = em.find(FlightInstance.class, flightID);
-            System.out.println(flightInstance);
+            if(flightInstance == null){
+                throw new FlightNotFoundException("The flight with ID : " + flightID + " does not exist");
+            }
             if(flightInstance.getFreeSeats().size()<customer.size()){
                 throw new SoldOutException("There are not enough tickets left");
             }
