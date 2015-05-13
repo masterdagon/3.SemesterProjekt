@@ -195,7 +195,6 @@ public class Facade {
             reservation = new Reservation(customer,flightInstance);
             em.getTransaction().begin();
             em.persist(reservation);
-            em.persist(reservation.getCustomer());
             for (Seat seat : reservation.getSeatList()) {
                 em.persist(seat);
             }

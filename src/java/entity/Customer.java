@@ -23,9 +23,6 @@ public class Customer implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String fName,lName,street,city,country;
-    @OneToOne(mappedBy = "customer")
-    private Reservation reservation;
-
     public Customer() {
     }
 
@@ -37,20 +34,12 @@ public class Customer implements Serializable {
         this.country = country;
     }
 
-    public Reservation getReservation() {
-        return reservation;
-    }
-
     public String getCity() {
         return city;
     }
 
     public void setCity(String city) {
         this.city = city;
-    }
-    
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
     }
 
     public String getStreet() {

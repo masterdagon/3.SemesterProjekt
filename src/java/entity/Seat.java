@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,8 +23,7 @@ public class Seat implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String seatNumber;
-    
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Customer customer;
     @ManyToOne
     private Reservation reservation;

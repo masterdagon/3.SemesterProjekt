@@ -8,6 +8,7 @@ package entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,8 +28,8 @@ public class Reservation implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @OneToMany(mappedBy = "reservation")
-    private List<Seat> seatList;
-    @OneToOne
+    private List<Seat> seatList; 
+    @OneToOne(cascade = CascadeType.ALL)
     private Customer customer;
     @ManyToOne
     private FlightInstance flightInstance;
