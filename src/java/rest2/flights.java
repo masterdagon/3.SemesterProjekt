@@ -200,18 +200,19 @@ public class flights {
     }
     
     @POST
-    @Consumes("application/xml")
+    @Consumes("application/json")
     @Path("/{flightID}")
-    public void createReservation(String content,@PathParam("flightID")String flightID) throws SoldOutException {
+    public Reservation createReservation(String content,@PathParam("flightID")String flightID) throws SoldOutException {
         JsonObject res = new JsonParser().parse(content).getAsJsonObject();
         ArrayList<Customer> clist = new ArrayList();
-        JsonArray aList = res.getAsJsonArray("Passengers");
+        JsonArray aList = res.get("Passengers").getAsJsonArray();
          for (int i = 0; i < aList.size(); i++) {
              JsonObject cust = aList.get(i).getAsJsonObject();
              Customer c = new Customer(cust.get("firstName").getAsString(), cust.get("lastName").getAsString(), cust.get("street").getAsString(), cust.get("country").getAsString(), cust.get("city").getAsString());
              clist.add(c);
          }
-        f.createReservation(clist, flightID);
+        System.out.println(clist.size());
+        return f.createReservation(clist, flightID);
     }
     
     @DELETE

@@ -25,6 +25,7 @@ public class PopulateTables {
     static Facade f = new Facade();
     
     public static void main(String[] args) throws SoldOutException {
+
         f.createAirport("CPH", "Copenhagen","Denmark");
         f.createAirport("BER", "Berlin", "Germany");
         f.createAirport("MAD", "Madrid", "Spain");
@@ -144,6 +145,7 @@ public class PopulateTables {
 //        System.out.println(f.getFlightWithDatesAndDepature(date1, date2,"FBB").size());
 //        System.out.println(f.getFlightOnDateFromDepature(date,"FBB").size());
 //        System.out.println(f.deleteReservation(res.getId()).getFreeSeats().size());
+                System.out.println(f.getFlightInstance("5"));
     }
     
 }
