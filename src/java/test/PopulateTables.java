@@ -25,7 +25,8 @@ public class PopulateTables {
     static Facade f = new Facade();
     
     public static void main(String[] args) throws SoldOutException {
-
+        //database build!
+        
         f.createAirport("CPH", "Copenhagen","Denmark");
         f.createAirport("BER", "Berlin", "Germany");
         f.createAirport("MAD", "Madrid", "Spain");
@@ -125,14 +126,19 @@ public class PopulateTables {
             System.out.println(count);
             count++;
         }
+        
+        //Test stuff:
+        
 //        Customer c1 = f.createCustomer("Martin", "Rasmussen", "Egedalsvænge", "Denmark", "Kokkedal");
 //        Customer c2 = f.createCustomer("Dennis", "Jensen", "Jernbanegade", "Denmark", "Hundested");
-//        ArrayList<Customer> customerList = new ArrayList();
-//        customerList.add(c1);
-//        customerList.add(c2);
+        Customer c1 = new Customer("Muggi","test","test","test","test");
+        Customer c2 = new Customer("Nuggi","test","test","test","test");
+        ArrayList<Customer> customerList = new ArrayList();
+        customerList.add(c1);
+        customerList.add(c2);
 //        Date date = new Date();
 //        FlightInstance fi1 = f.createFlightInstance("SAS", date, 800, "CPH", "FBB", "Airbus A350");
-//        Reservation res = f.createReservation(customerList,fi1.getFlightID());
+        Reservation res = f.createReservation(customerList,"1");
 //        System.out.println("id" +res.getId());
 //        System.out.println(f.getFlightWithFromToDate("FBB","CPH",date).size());
 //        Calendar c = Calendar.getInstance(); 
@@ -145,7 +151,9 @@ public class PopulateTables {
 //        System.out.println(f.getFlightWithDatesAndDepature(date1, date2,"FBB").size());
 //        System.out.println(f.getFlightOnDateFromDepature(date,"FBB").size());
 //        System.out.println(f.deleteReservation(res.getId()).getFreeSeats().size());
-                System.out.println(f.getFlightInstance("5"));
+//                System.out.println(f.getFlightInstance("5"));
+        
+        System.out.println(res);
     }
     
 }

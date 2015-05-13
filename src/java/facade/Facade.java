@@ -187,13 +187,18 @@ public class Facade {
         try {
             em = getEntityManager();
             System.out.println(flightID);
-            flightInstance = em.find(FlightInstance.class, "5");
+            flightInstance = em.find(FlightInstance.class, flightID);
             System.out.println(flightInstance);
             if(flightInstance.getFreeSeats().size()<customer.size()){
                 throw new SoldOutException("There are not enough tickets left");
             }
-            reservation = new Reservation(customer,flightInstance);
             em.getTransaction().begin();
+            ArrayList<Customer> custwithid = new ArrayList();
+            for(Customer c : customer){
+                em.persist(c);
+                custwithid.add(c);
+            }
+            reservation = new Reservation(custwithid,flightInstance);
             em.persist(reservation);
             for (Seat seat : reservation.getSeatList()) {
                 em.persist(seat);
